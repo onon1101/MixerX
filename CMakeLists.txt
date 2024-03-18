@@ -1,0 +1,11 @@
+project(Config)
+
+cmake_minimum_required(VERSION 3.27)
+
+list(APPEND CMAKE_SYSTEM_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/SDL2)
+# set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/SDL2 CACHE FILEPATH "Root directory of OpenNI2" FORCE)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
+message(STATUS "Path: ${CMAKE_SYSTEM_PREFIX_PATH}")
+find_package(SDL2 REQUIRED)
+
+add_executable(Config main.cc)
