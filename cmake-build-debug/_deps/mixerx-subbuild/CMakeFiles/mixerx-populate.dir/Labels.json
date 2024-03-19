@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/CMakeFiles/mixerx-populate"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/CMakeFiles/mixerx-populate.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/CMakeFiles/mixerx-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-build.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-download.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-install.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-test.rule"
+		},
+		{
+			"file" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"mixerx-populate"
+		],
+		"name" : "mixerx-populate"
+	}
+}

@@ -1,0 +1,188 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/chenshiang/Desktop/MixerX -B /Users/chenshiang/Desktop/MixerX/cmake-build-debug
+CMake Warning (dev) at /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (SDL2main)
+  does not match the name of the calling package (SDL2).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  3rdparty/sdl2/FindSDL2.cmake:318 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  cmake/Library_SDL2.cmake:3 (find_package)
+  CMakeLists.txt:59 (include)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Build spdlog: 1.10.0
+-- Build type: Debug
+-- Configuring SDL2_ttf 2.20.2
+CMake Warning (dev) at /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (SDL2main)
+  does not match the name of the calling package (SDL2).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  3rdparty/sdl2/FindSDL2.cmake:318 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  3rdparty/sdl2_ttf/cmake/PrivateSdlFunctions.cmake:49 (find_package)
+  3rdparty/sdl2_ttf/CMakeLists.txt:74 (sdl_find_sdl2)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (SDL2main)
+  does not match the name of the calling package (SDL2).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  3rdparty/sdl2/FindSDL2.cmake:318 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  3rdparty/sdl2_ttf/cmake/PrivateSdlFunctions.cmake:53 (find_package)
+  3rdparty/sdl2_ttf/CMakeLists.txt:74 (sdl_find_sdl2)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning at 3rdparty/sdl2_ttf/cmake/PrivateSdlFunctions.cmake:55 (message):
+  Could not verify SDL2 version.  Assuming SDL2 has version of at least
+  2.0.10.
+Call Stack (most recent call first):
+  3rdparty/sdl2_ttf/CMakeLists.txt:74 (sdl_find_sdl2)
+
+
+-- Using private SDL2 find module
+-- Found PrivateSDL2: /opt/homebrew/lib/libSDL2.dylib (found suitable version "2.30.1", minimum required is "2.0.10") 
+-- SDL2_ttf: Using vendored freetype library
+-- Configuring SDL2_image 2.6.3
+CMake Warning (dev) at /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (SDL2main)
+  does not match the name of the calling package (SDL2).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  3rdparty/sdl2/FindSDL2.cmake:318 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  3rdparty/sdl2_image/cmake/PrivateSdlFunctions.cmake:49 (find_package)
+  3rdparty/sdl2_image/CMakeLists.txt:163 (sdl_find_sdl2)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (SDL2main)
+  does not match the name of the calling package (SDL2).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  3rdparty/sdl2/FindSDL2.cmake:318 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  3rdparty/sdl2_image/cmake/PrivateSdlFunctions.cmake:53 (find_package)
+  3rdparty/sdl2_image/CMakeLists.txt:163 (sdl_find_sdl2)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning at 3rdparty/sdl2_image/cmake/PrivateSdlFunctions.cmake:55 (message):
+  Could not verify SDL2 version.  Assuming SDL2 has version of at least
+  2.0.9.
+Call Stack (most recent call first):
+  3rdparty/sdl2_image/CMakeLists.txt:163 (sdl_find_sdl2)
+
+
+-- Using private SDL2 find module
+-- Found PrivateSDL2: /opt/homebrew/lib/libSDL2.dylib (found suitable version "2.30.1", minimum required is "2.0.9") 
+-- Found SDL2main: /opt/homebrew/lib/libSDL2main.a  
+AudioCodecs will NOT be used. Libraries will be recognized in the system.
+C++ Library: stdc++ [TRUE], c++abi [TRUE]
+== using STB-Vorbis (BSD 3-Clause) ==
+Opus: [TRUE] /opt/homebrew/include/ogg;/opt/homebrew/include/opus /opt/homebrew/lib/libopusfile.dylib;/opt/homebrew/lib/libopus.dylib 
+== using Opus (BSD 3-Clause) ==
+== using FLAC (public domain or MIT-0) ==
+WavPack: [TRUE] /opt/homebrew/include /opt/homebrew/lib/libwavpack.dylib
+== using WavPack (BSD 3-Clause) ==
+== using DRMP3 (public domain or MIT-0) ==
+ModPlug: [FALSE] ModPlug_INCLUDE_DIR-NOTFOUND ModPlug_LIBRARY-NOTFOUND
+-- skipping libModPlug --
+CMake Warning (dev) at /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (XMPLITE)
+  does not match the name of the calling package (XMPLite).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  3rdparty/SDL-Mixer-X/cmake/find/FindXMPLite.cmake:27 (find_package_handle_standard_args)
+  3rdparty/SDL-Mixer-X/src/codecs/music_xmp.cmake:18 (find_package)
+  3rdparty/SDL-Mixer-X/CMakeLists.txt:220 (include)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Could NOT find XMPLITE (missing: XMPLITE_LIBRARY) 
+XMP-Lite: [FALSE] /opt/homebrew/include XMPLITE_LIBRARY-NOTFOUND
+-- skipping XMP --
+== using PXTone (Own liberal license) ==
+EDMIDI: [FALSE] EDMIDI_INCLUDE_DIR-NOTFOUND EDMIDI_LIBRARY-NOTFOUND
+-- skipping EDMIDI --
+== using Timidity-SDL (Artistic Public License) ==
+-- !! Timidity-SDL2 library is not found, using local sources to build it
+CMake Warning (dev) at /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (SDL2main)
+  does not match the name of the calling package (SDL2).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  3rdparty/sdl2/FindSDL2.cmake:318 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
+  3rdparty/SDL-Mixer-X/cmake/libSDL2.cmake:13 (find_package)
+  3rdparty/SDL-Mixer-X/CMakeLists.txt:255 (include)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Found SDL2main: /opt/homebrew/lib/libSDL2main.a (found version "2.30.1") 
+== SDL2: /opt/homebrew/include/SDL2  ==
+==== SDL Mixer X modules ====
+  OGG found:
+  -- /opt/homebrew/lib/libogg.dylib
+  stb_vorbis found:
+  -- <built-in>
+  OPUS found:
+  -- /opt/homebrew/lib/libopusfile.dylib;/opt/homebrew/lib/libopus.dylib
+  DRFLAC found:
+  -- <built-in>
+  FLAC is disabled
+  -- <disabled>
+  DRMP3 found:
+  -- <built-in>
+  MPG123 is disabled
+  -- <disabled>
+  WavPack found:
+  -- /opt/homebrew/lib/libwavpack.dylib
+  ModPlug is missing, will be disabled
+  -- <missing>
+  libXMP is disabled because it's LGPLv2.1-licensed component
+  -- <disabled>
+  GME is disabled because it's LGPLv2.1-licensed component
+  -- <disabled>
+  FFMPEG is disabled
+  -- <disabled>
+  PXTONE found:
+  -- <built-in>
+  libADLMIDI is disabled because it's GPLv3-licensed component
+  -- <disabled>
+  libOPNMIDI is disabled because it's GPLv3-licensed component
+  -- <disabled>
+  libEDMIDI is missing, will be disabled
+  -- <missing>
+  FluidSynth is disabled
+  -- <disabled>
+  FluidLite is disabled because it's LGPLv2.1-licensed component
+  -- <disabled>
+  Timidity-SDL found:
+  -- 
+===============================================================================
+Enabled audio file formats:
+-------------------------------------------------------------------------------
+PCM-based formats (10):
+    AIFF(Music), AIFF(SFX), FLAC, MP3, OGG Voribs, Opus, VOC(SFX), WAV(Music),
+    WAV(SFX), WV
+-------------------------------------------------------------------------------
+MIDI formats (2):
+    MIDI, RIFF MIDI
+-------------------------------------------------------------------------------
+Chiptune formats (2):
+    PTCOP, PTTUNE
+-------------------------------------------------------------------------------
+All formats (14):
+    AIFF(Music), AIFF(SFX), FLAC, MIDI, MP3, OGG Voribs, Opus, PTCOP, PTTUNE,
+    RIFF MIDI, VOC(SFX), WAV(Music), WAV(SFX), WV
+-------------------------------------------------------------------------------
+===============================================================================
+                  License for this library build is ZLib.
+===============================================================================
+LGPL-licensed components are DISABLED. If you want to enable them, set the -DMIXERX_ENABLE_LGPL=ON option
+GPL-licensed components are DISABLED. If you want to enable them, set the -DMIXERX_ENABLE_GPL=ON option
+===============================================================================
+-- Configuring done (1.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/chenshiang/Desktop/MixerX/cmake-build-debug

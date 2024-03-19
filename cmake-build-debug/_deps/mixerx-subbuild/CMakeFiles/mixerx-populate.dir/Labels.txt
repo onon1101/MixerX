@@ -1,0 +1,14 @@
+# Target labels
+ mixerx-populate
+# Source files and their labels
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/CMakeFiles/mixerx-populate
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/CMakeFiles/mixerx-populate.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/CMakeFiles/mixerx-populate-complete.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-build.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-configure.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-download.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-install.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-mkdir.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-patch.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-test.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/mixerx-subbuild/mixerx-populate-prefix/src/mixerx-populate-stamp/mixerx-populate-update.rule

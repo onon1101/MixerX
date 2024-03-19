@@ -1,0 +1,21 @@
+# ninja log v5
+0	8	1710837190623106922	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-mkdir	caf2fb8c66acde7c
+0	8	1710837190623106922	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-mkdir	caf2fb8c66acde7c
+21815	21825	1710837212440106844	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-build	8349ed4522628c6d
+21834	21842	1710837212457572346	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-test	e96f76a27e530ea1
+21797	21815	1710837212430431537	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-configure	5f2c214f800b5e77
+8	21777	1710837212392376722	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-download	30eb8f601cf51463
+21788	21797	1710837212412391581	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-patch	7c26175df65142e6
+21834	21842	1710837212457572346	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-test	e96f76a27e530ea1
+21778	21788	1710837212403365145	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-update	eecc51142e70e4f4
+21797	21815	1710837212430431537	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-configure	5f2c214f800b5e77
+21788	21797	1710837212412391581	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-patch	7c26175df65142e6
+21815	21825	1710837212440106844	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-build	8349ed4522628c6d
+21778	21788	1710837212403365145	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-update	eecc51142e70e4f4
+8	21777	1710837212392376722	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-download	30eb8f601cf51463
+21825	21834	1710837212448742242	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-install	ee939379c5292c40
+21842	21855	1710837212470150674	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-done	5dbd81b4b98d0b6e
+21825	21834	1710837212448742242	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-install	ee939379c5292c40
+21842	21855	1710837212470150674	CMakeFiles/sdl2_ttf-populate-complete	5dbd81b4b98d0b6e
+21842	21855	1710837212470150674	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/CMakeFiles/sdl2_ttf-populate-complete	5dbd81b4b98d0b6e
+21842	21855	1710837212470150674	sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-done	5dbd81b4b98d0b6e

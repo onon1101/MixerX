@@ -1,0 +1,402 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						4,
+						5,
+						7,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "3rdparty/glew/build/cmake",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-3rdparty.glew.build.cmake-Debug-b8f035ddd09fdb4858af.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "3rdparty/glew/build/cmake",
+					"targetIndexes" : 
+					[
+						5,
+						6,
+						7,
+						13,
+						14
+					]
+				},
+				{
+					"build" : "_deps/glm-build",
+					"childIndexes" : 
+					[
+						3
+					],
+					"jsonFile" : "directory-_deps.glm-build-Debug-54855bfd0124664abff2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "3rdparty/glm"
+				},
+				{
+					"build" : "_deps/glm-build/glm",
+					"jsonFile" : "directory-_deps.glm-build.glm-Debug-b5e7b6835f6c42ec2f19.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 2,
+					"source" : "3rdparty/glm/glm"
+				},
+				{
+					"build" : "_deps/spdlog-build",
+					"jsonFile" : "directory-_deps.spdlog-build-Debug-1aeb2cfbf83a44c962b4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "3rdparty/spdlog",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "_deps/sdl2_ttf-build",
+					"childIndexes" : 
+					[
+						6
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.sdl2_ttf-build-Debug-4752ec56b1a5652bf9c5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "3rdparty/sdl2_ttf",
+					"targetIndexes" : 
+					[
+						3,
+						8,
+						10
+					]
+				},
+				{
+					"build" : "_deps/sdl2_ttf-build/external/freetype",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.sdl2_ttf-build.external.freetype-Debug-e4da7a35e6043383ce8c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"parentIndex" : 5,
+					"projectIndex" : 5,
+					"source" : "3rdparty/sdl2_ttf/external/freetype",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "_deps/sdl2_image-build",
+					"jsonFile" : "directory-_deps.sdl2_image-build-Debug-a629dfc4c7a79fe408b9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 6,
+					"source" : "3rdparty/sdl2_image",
+					"targetIndexes" : 
+					[
+						1,
+						9,
+						11
+					]
+				},
+				{
+					"build" : "_deps/mixerx-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.mixerx-build-Debug-30368719aa57c69a5f78.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 7,
+					"source" : "3rdparty/SDL-Mixer-X",
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						6,
+						7
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Config",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "glew",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						5,
+						6,
+						7,
+						13,
+						14
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2,
+						3
+					],
+					"name" : "glm",
+					"parentIndex" : 0
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "spdlog",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						5
+					],
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "SDL2_ttf",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						8,
+						10
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "freetype",
+					"parentIndex" : 4,
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "SDL2_image",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						9,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
+					],
+					"name" : "SDLMixerX",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Config::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Config-Debug-e37572f4141221a7601f.json",
+					"name" : "Config",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "SDL2_image::@de341d98faad78faee90",
+					"jsonFile" : "target-SDL2_image-Debug-163b182b40f1d8ca62e5.json",
+					"name" : "SDL2_image",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "SDL2_mixer_ext_Static::@290d3cf413f49d5ff676",
+					"jsonFile" : "target-SDL2_mixer_ext_Static-Debug-0830e0536041f407b60a.json",
+					"name" : "SDL2_mixer_ext_Static",
+					"projectIndex" : 7
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "SDL2_ttf::@bbdb2daa5afc341778ea",
+					"jsonFile" : "target-SDL2_ttf-Debug-d2576442e3c547510482.json",
+					"name" : "SDL2_ttf",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "freetype::@1caf39cd73602fb8f135",
+					"jsonFile" : "target-freetype-Debug-52f2585346e9ac79143d.json",
+					"name" : "freetype",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "glew::@ddd567fbddb9ef8cac57",
+					"jsonFile" : "target-glew-Debug-043eb86efc85001b83ee.json",
+					"name" : "glew",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "glew_s::@ddd567fbddb9ef8cac57",
+					"jsonFile" : "target-glew_s-Debug-ddba5a58045c79607a38.json",
+					"name" : "glew_s",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "glewinfo::@ddd567fbddb9ef8cac57",
+					"jsonFile" : "target-glewinfo-Debug-41e4b29de2a24ed64d3e.json",
+					"name" : "glewinfo",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "glfont::@bbdb2daa5afc341778ea",
+					"jsonFile" : "target-glfont-Debug-33ad488d54085ea672fe.json",
+					"name" : "glfont",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "showanim::@de341d98faad78faee90",
+					"jsonFile" : "target-showanim-Debug-7674286a8dfce13b9a32.json",
+					"name" : "showanim",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "showfont::@bbdb2daa5afc341778ea",
+					"jsonFile" : "target-showfont-Debug-59f35508b7ab31c27845.json",
+					"name" : "showfont",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "showimage::@de341d98faad78faee90",
+					"jsonFile" : "target-showimage-Debug-a9bbb45e8390f0e18407.json",
+					"name" : "showimage",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "spdlog::@eb35cfce7893ccfeff1e",
+					"jsonFile" : "target-spdlog-Debug-e675440c678139e5219b.json",
+					"name" : "spdlog",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "uninstall::@ddd567fbddb9ef8cac57",
+					"jsonFile" : "target-uninstall-Debug-305480c8236286e18089.json",
+					"name" : "uninstall",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "visualinfo::@ddd567fbddb9ef8cac57",
+					"jsonFile" : "target-visualinfo-Debug-389181a53f384bf8bfe9.json",
+					"name" : "visualinfo",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/chenshiang/Desktop/MixerX/cmake-build-debug",
+		"source" : "/Users/chenshiang/Desktop/MixerX"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}

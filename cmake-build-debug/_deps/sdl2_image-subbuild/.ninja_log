@@ -1,0 +1,21 @@
+# ninja log v5
+0	29	1710837213651532055	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-mkdir	64608e7133e6f4b3
+11518	11527	1710837225150598998	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-update	1d00fe67f5d2e6ac
+29	11518	1710837225141207106	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-download	54e18b3e82ab5fe5
+11536	11544	1710837225166704302	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-configure	5aa53d302c845c7
+11568	11579	1710837225202415758	CMakeFiles/sdl2_image-populate-complete	64f0e59eeb79fbe2
+29	11518	1710837225141207106	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-download	54e18b3e82ab5fe5
+0	29	1710837213651532055	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-mkdir	64608e7133e6f4b3
+11518	11527	1710837225150598998	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-update	1d00fe67f5d2e6ac
+11560	11568	1710837225191184046	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-test	c467145443f8d9bd
+11527	11536	1710837225158771733	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-patch	85cb0314aada1537
+11527	11536	1710837225158771733	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-patch	85cb0314aada1537
+11536	11544	1710837225166704302	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-configure	5aa53d302c845c7
+11544	11552	1710837225174990077	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-build	42bd39ae58b6f296
+11544	11552	1710837225174990077	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-build	42bd39ae58b6f296
+11552	11560	1710837225182933729	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-install	348c11b3ce76b0c8
+11552	11560	1710837225182933729	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-install	348c11b3ce76b0c8
+11560	11568	1710837225191184046	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-test	c467145443f8d9bd
+11568	11579	1710837225202415758	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-done	64f0e59eeb79fbe2
+11568	11579	1710837225202415758	sdl2_image-populate-prefix/src/sdl2_image-populate-stamp/sdl2_image-populate-done	64f0e59eeb79fbe2
+11568	11579	1710837225202415758	/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_image-subbuild/CMakeFiles/sdl2_image-populate-complete	64f0e59eeb79fbe2

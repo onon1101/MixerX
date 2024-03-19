@@ -1,0 +1,14 @@
+# Target labels
+ sdl2_ttf-populate
+# Source files and their labels
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/CMakeFiles/sdl2_ttf-populate
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/CMakeFiles/sdl2_ttf-populate.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/CMakeFiles/sdl2_ttf-populate-complete.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-build.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-configure.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-download.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-install.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-mkdir.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-patch.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-test.rule
+/Users/chenshiang/Desktop/MixerX/cmake-build-debug/_deps/sdl2_ttf-subbuild/sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-update.rule

@@ -1,0 +1,120 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"3rdparty/SDL-Mixer-X/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 479,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 485,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 526,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 537,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 552,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"lib/libSDL2_mixer_ext.a"
+			],
+			"targetId" : "SDL2_mixer_ext_Static::@290d3cf413f49d5ff676",
+			"targetIndex" : 2,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/SDL2_mixer_ext",
+			"exportName" : "SDL2MixerExtStaticTargets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "SDL2_mixer_ext_Static::@290d3cf413f49d5ff676",
+					"index" : 2
+				}
+			],
+			"paths" : 
+			[
+				"_deps/mixerx-build/CMakeFiles/Export/2dc727f3fe5f4dacfc15c5c57697918b/SDL2_mixer_ext-static-targets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "include/SDL2",
+			"paths" : 
+			[
+				{
+					"from" : "3rdparty/SDL-Mixer-X/include/SDL_mixer.h",
+					"to" : "SDL_mixer_ext.h"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/SDL2_mixer_ext",
+			"paths" : 
+			[
+				"cmake-build-debug/_deps/mixerx-build/SDL2_mixer_extConfig.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Unspecified",
+			"destination" : "lib/pkgconfig",
+			"paths" : 
+			[
+				"cmake-build-debug/_deps/mixerx-build/SDL2_mixer_ext.pc"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "_deps/mixerx-build",
+		"source" : "3rdparty/SDL-Mixer-X"
+	}
+}
