@@ -16,3 +16,6 @@ ExternalProject_Add(
             # "${SDL_MixerX_SO_Lib}"
             # "${SDL_MixerX_A_Lib}"
     )
+
+  ExternalProject_Get_property(SDL2 INSTALL_DIR)
+  message(STATUS "INSTALL_DIR: ${INSTALL_DIR}")
