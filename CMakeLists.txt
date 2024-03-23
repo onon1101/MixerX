@@ -104,8 +104,6 @@ if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     endif()
 endif()
 
-# Version
-#include(version.cmake)
 # Default GIT version
 include(cmake/git_version.cmake)
 
@@ -306,9 +304,6 @@ if(APPLE OR WIN32)
 endif()
 
 # 32-bit Android special case, temporarily disabled for some experiments
-# if(ANDROID AND CMAKE_SIZEOF_VOID_P EQUAL 4)
-#     set(THEXTECH_BUILD_GL_ES_MODERN OFF CACHE BOOL "" FORCE)
-# endif()
 
 if(EMSCRIPTEN)
     set(THEXTECH_BUILD_GL_DESKTOP_MODERN OFF CACHE BOOL "" FORCE)
@@ -339,6 +334,7 @@ if(NOT VITA AND NOT NINTENDO_SWITCH AND NOT NINTENDO_3DS AND NOT NINTENDO_WII AN
     include(3rdparty/FileMapper/FileMapper.cmake)
 endif()
 
+# TODO: Don't touch
 include(3rdparty/IniProcessor/IniProcessor.cmake)
 if(WIN32)
     include(lib/CrashHandler/StackWalker/StackWalker.cmake)
@@ -348,6 +344,7 @@ include(cmake/library_zlib.cmake)
 
 add_definitions("-DMOONDUST_LOGGER_FILENAME_PREFIX=\"TheXTech\"")
 
+# TODO: Don't touch
 if(THEXTECH_ENABLE_TTF_SUPPORT)
     option(THEXTECH_ENABLE_TTF_HARFBUZZ "Enable the HarfBuzz library use" OFF)
     mark_as_advanced(THEXTECH_ENABLE_TTF_HARFBUZZ) # Temporarily disable
@@ -364,12 +361,6 @@ if(PGE_MIN_PORT)
     set(ENABLE_UBSAN OFF CACHE BOOL "" FORCE)
 endif()
 
-if(THEXTECH_ENABLE_LUA)
-    include(cmake/library_luajit.cmake)
-    include(cmake/library_luabind.cmake)
-endif()
-
-include(cmake/library_discord_rpc.cmake)
 
 if(EMSCRIPTEN)
     message("Is EMSCRIPTEN!")
@@ -411,7 +402,7 @@ if(THEXTECH_ENABLE_LUA)
     list(APPEND A2XT_INCS script/include)
 endif()
 
-include(cmake/library_glew.cmake)
+#include(cmake/library_glew.cmake)
 
 if(USE_SYSTEM_LIBS)
     find_package(SDL2 REQUIRED)
@@ -922,7 +913,7 @@ if(WIN32)
     target_link_libraries(thextech PRIVATE "version" dbghelp) # needed by StackWalker
 endif()
 
-include(cmake/deploy.cmake)
+#include(cmake/deploy.cmake)
 
 if(APPLE)
     install(TARGETS thextech DESTINATION .)
@@ -970,7 +961,7 @@ elseif(WIN32)
     install(FILES README.md DESTINATION . RENAME ReadMe.txt)
     install(FILES LICENSE DESTINATION . RENAME License.TheXTech.txt)
 elseif(VITA)
-    include(cmake/package_vita.cmake)
+#    include(cmake/package_vita.cmake)
 elseif(NINTENDO_3DS)
     if(NOT "${THEXTECH_VERSION_REL}" STREQUAL "")
         set(SMDH_VERSION "git branch ${GIT_BRANCH} #${GIT_COMMIT_HASH}")
@@ -1018,7 +1009,7 @@ elseif(NINTENDO_DS)
 #        ICON "${CMAKE_SOURCE_DIR}/resources/nds/icon.bmp"
     )
 elseif(NINTENDO_SWITCH)
-    include(cmake/package_switch.cmake)
+#    include(cmake/package_switch.cmake)
 elseif(EMSCRIPTEN)
     add_custom_command(
         TARGET thextech POST_BUILD
