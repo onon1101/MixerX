@@ -559,53 +559,6 @@ endif()
 target_link_libraries(A2XT_Int INTERFACE ${A2XT_LIBS})
 target_include_directories(A2XT_Int INTERFACE ${A2XT_INCS})
 
-#set(LIB_SRC
-#    lib/util.cpp
-#    lib/fader.cpp
-#    lib/Graphics/image_size.cpp
-#    lib/Graphics/size.cpp
-#    ${APPPATH_SRCS}
-#    ${DIRMANAGER_SRCS}
-#    ${FMT_SRCS}
-#    ${MD5_SRCS}
-#    ${POOLALLOC_SRCS}
-#    ${INIPROCESSOR_SRCS}
-#    ${LOGGER_SRCS}
-#    ${UTILS_SRCS}
-#    ${LIB_SRC_EXTRA}
-#    ${SDLPROXY_SRCS}
-#)
-
-#if(NOT THEXTECH_NO_SDL_BUILD)
-#list(APPEND LIB_SRC
-#    lib/Graphics/graphics_funcs.cpp
-#    lib/Graphics/sizef.cpp
-#    lib/Graphics/rect.cpp
-#    lib/Graphics/rectf.cpp
-#    lib/Graphics/point.cpp
-#    lib/Graphics/pointf.cpp
-#)
-#endif()
-
-#if(NOT ANDROID
-#   AND NOT EMSCRIPTEN
-#   AND NOT VITA
-#   AND NOT NINTENDO_3DS
-#   AND NOT NINTENDO_WII
-#   AND NOT NINTENDO_WIIU
-#   AND NOT NINTENDO_SWITCH
-#   AND NOT THEXTECH_CLI_BUILD
-#   AND NOT PGE_MIN_PORT)
-#    list(APPEND LIB_SRC
-#        lib/InterProcess/editor_pipe.h
-#        lib/InterProcess/editor_pipe.cpp
-#        lib/InterProcess/intproc.h
-#        lib/InterProcess/intproc.cpp
-#        src/capabilities.cpp
-#    )
-#    set(THEXTECH_INTERPROC_SUPPORTED ON)
-#endif()
-
 # Integrations with external applications
 if(THEXTECH_ENABLE_INTEGRATOR)
     list(APPEND LIB_SRC
