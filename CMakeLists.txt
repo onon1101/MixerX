@@ -44,20 +44,20 @@ if(EMSCRIPTEN)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 endif()
 
-if(APPLE)
-
-    if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET OR CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL "")
-        if(CMAKE_HOST_SYSTEM_VERSION VERSION_LESS 9)
-            set(THEXTECH_MACOS_MIN_VERSION "10.4")
-        else()
-            set(THEXTECH_MACOS_MIN_VERSION "10.11")
-        endif()
-    else()
-        set(THEXTECH_MACOS_MIN_VERSION "${CMAKE_OSX_DEPLOYMENT_TARGET}")
-    endif()
-
-    message("-> Mac OS X minimal version: ${THEXTECH_MACOS_MIN_VERSION}")
-endif()
+#if(APPLE)
+#
+#    if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET OR CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL "")
+#        if(CMAKE_HOST_SYSTEM_VERSION VERSION_LESS 9)
+#            set(THEXTECH_MACOS_MIN_VERSION "10.4")
+#        else()
+#            set(THEXTECH_MACOS_MIN_VERSION "10.11")
+#        endif()
+#    else()
+#        set(THEXTECH_MACOS_MIN_VERSION "${CMAKE_OSX_DEPLOYMENT_TARGET}")
+#    endif()
+#
+#    message("-> Mac OS X minimal version: ${THEXTECH_MACOS_MIN_VERSION}")
+#endif()
 
 if(ANDROID)
     set(DEPENDENCIES_INSTALL_DIR ${CMAKE_BINARY_DIR}/output-deps)
@@ -69,13 +69,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/bin)
 
-foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-    message("--> ${OUTPUTCONFIG}")
-    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
-endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
+#foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+#    message("--> ${OUTPUTCONFIG}")
+#    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+#    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
+#    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+#    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+#endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 set(PGE_INSTALL_DIRECTORY "TheXTech")
 
@@ -87,13 +87,6 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffloat-store")
 endif()
 
-if(WIN32 AND NOT EMSCRIPTEN)
-    set(CMAKE_SHARED_LIBRARY_PREFIX "")
-endif()
-
-if(UNIX)
-    check_include_file(/opt/vc/include/bcm_host.h BCMHOST_H)
-endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 
@@ -110,23 +103,6 @@ include(cmake/git_version.cmake)
 
 set(USE_SYSTEM_LIBS_DEFAULT OFF)
 
-if(HAIKU OR VITA OR NINTENDO_SWITCH OR NINTENDO_WII OR NINTENDO_WIIU OR XTECH_MACOSX_TIGER)
-    set(USE_SYSTEM_SDL2_DEFAULT ON)  # Should be used on Haiku, own SDL2 Haiku build on CMake is broken
-else()
-    set(USE_SYSTEM_SDL2_DEFAULT ${USE_SYSTEM_LIBS_DEFAULT})
-endif()
-
-if(NINTENDO_DS)
-    set(THEXTECH_ENABLE_TTF_SUPPORT_DEFAULT OFF)
-else()
-    set(THEXTECH_ENABLE_TTF_SUPPORT_DEFAULT ON)
-endif()
-
-if(APPLE OR WIN32 OR (CMAKE_SYSTEM_NAME STREQUAL "Linux"))
-    set(THEXTECH_USE_ANGLE_TRANSLATOR_DEFAULT ON)
-else()
-    set(THEXTECH_USE_ANGLE_TRANSLATOR_DEFAULT OFF)
-endif()
 
 option(USE_SYSTEM_LIBS "Use dependent libraries like SDL2, FreeImageLite and MixerX, installed in the system" ${USE_SYSTEM_LIBS_DEFAULT})
 option(USE_SYSTEM_SDL2 "Use SDL2 from a system even prefering system libraries" ${USE_SYSTEM_SDL2_DEFAULT})
@@ -335,12 +311,12 @@ endif()
 #endif()
 
 # TODO: Don't touch
-include(3rdparty/IniProcessor/IniProcessor.cmake)
-if(WIN32)
-    include(lib/CrashHandler/StackWalker/StackWalker.cmake)
-endif()
+#include(3rdparty/IniProcessor/IniProcessor.cmake)
+#if(WIN32)
+#    include(lib/CrashHandler/StackWalker/StackWalker.cmake)
+#endif()
 
-include(cmake/library_zlib.cmake)
+#include(cmake/library_zlib.cmake)
 
 add_definitions("-DMOONDUST_LOGGER_FILENAME_PREFIX=\"TheXTech\"")
 
@@ -355,12 +331,6 @@ if(THEXTECH_ENABLE_TTF_SUPPORT)
     endif()
     include(cmake/library_FreeType.cmake)
 endif()
-
-if(PGE_MIN_PORT)
-    set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-    set(ENABLE_UBSAN OFF CACHE BOOL "" FORCE)
-endif()
-
 
 if(EMSCRIPTEN)
     message("Is EMSCRIPTEN!")
@@ -404,79 +374,61 @@ endif()
 
 #include(cmake/library_glew.cmake)
 
-if(USE_SYSTEM_LIBS)
-    find_package(SDL2 REQUIRED)
+include(cmake/library_FreeImage.cmake)
+list(APPEND A2XT_DEPS FreeImage_Local)
+list(APPEND A2XT_LIBS PGE_FreeImage)
 
-    find_library(MIXERX_LIB NAMES SDL2_mixer_ext)
-    find_path(MIXERX_HEAD_DIR SDL_mixer_ext.h PATH_SUFFIXES SDL2)
+include(cmake/library_SDLMixerX.cmake)
+list(APPEND A2XT_INCS "${DEPENDENCIES_INSTALL_DIR}/include" ${SDL2_INCLUDE_DIRS})
 
-    find_library(FREEIMAGELITE_LIB NAMES FreeImageLite)
-    find_path(FREEIMAGELITE_HEAD_DIR NAMES FreeImageLite.h)
-
-    if(MINGW AND NOT SDL2_LIBRARIES)
-        set(SDL2_LIBRARIES mingw32 SDL2main SDL2)
+if(NOT USE_SYSTEM_ZLIB) # Depend on ZLib at AudioCodecs
+    if(TARGET FREETYPE_Local)
+        add_dependencies(FREETYPE_Local AudioCodecs_Local)
     endif()
-
-    list(APPEND A2XT_LIBS ${FREEIMAGELITE_LIB} ${MIXERX_LIB} "${SDL2_LIBRARIES}")
-    list(APPEND A2XT_INCS ${SDL2_INCLUDE_DIRS} ${MIXERX_HEAD_DIR} ${FREEIMAGELITE_HEAD_DIR})
-elseif(NOT THEXTECH_NO_SDL_BUILD)
-    include(cmake/library_FreeImage.cmake)
-    list(APPEND A2XT_DEPS FreeImage_Local)
-    list(APPEND A2XT_LIBS PGE_FreeImage)
-
-    include(cmake/library_SDLMixerX.cmake)
-    list(APPEND A2XT_INCS "${DEPENDENCIES_INSTALL_DIR}/include" ${SDL2_INCLUDE_DIRS})
-
-    if(NOT USE_SYSTEM_ZLIB) # Depend on ZLib at AudioCodecs
-        if(TARGET FREETYPE_Local)
-            add_dependencies(FREETYPE_Local AudioCodecs_Local)
-        endif()
-        add_dependencies(FreeImage_Local AudioCodecs_Local)
-    endif()
-
-    if(NOT THEXTECH_NO_MIXER_X)
-        list(APPEND A2XT_DEPS SDLMixerX_Local)
-    else()
-        list(APPEND A2XT_DEPS AudioCodecs_Local)
-    endif()
-
-    if(PGE_SHARED_SDLMIXER)
-        list(APPEND A2XT_LIBS PGE_SDLMixerX)
-    else()
-        list(APPEND A2XT_LIBS PGE_SDLMixerX_static)
-    endif()
-
-    if(THEXTECH_ENABLE_VENDORED_GLEW)
-        list(APPEND A2XT_DEPS GLEW_Local)
-        list(APPEND A2XT_LIBS PGE_GLEW)
-    endif()
-
-    if(WIN32 AND (THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_DESKTOP_LEGACY))
-        # glu32 not needed or provided on ARM
-        if("${TARGET_PROCESSOR}" STREQUAL "i386" OR "${TARGET_PROCESSOR}" STREQUAL "x86_64")
-            list(APPEND A2XT_LIBS glu32)
-        endif()
-
-        list(APPEND A2XT_LIBS opengl32 gdi32)
-    endif()
-
-    if(PGE_SHARED_SDLMIXER)
-        if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE AND NOT ANDROID AND NOT NINTENDO_SWITCH)
-            find_library(_LIB_GL GL)
-            if(_LIB_GL)
-                list(APPEND A2XT_LIBS ${_LIB_GL})
-            endif()
-        else()
-            list(APPEND A2XT_LIBS shell32)
-        endif()
-    endif()
-
-    if(THEXTECH_CUSTOM_AUDIO_LIBRARY)
-        list(APPEND A2XT_LIBS gme vorbisidec ogg)
-    endif()
-
-    list(APPEND A2XT_LIBS PGE_ZLib)
+    add_dependencies(FreeImage_Local AudioCodecs_Local)
 endif()
+
+if(NOT THEXTECH_NO_MIXER_X)
+    list(APPEND A2XT_DEPS SDLMixerX_Local)
+else()
+    list(APPEND A2XT_DEPS AudioCodecs_Local)
+endif()
+
+if(PGE_SHARED_SDLMIXER)
+    list(APPEND A2XT_LIBS PGE_SDLMixerX)
+else()
+    list(APPEND A2XT_LIBS PGE_SDLMixerX_static)
+endif()
+
+if(THEXTECH_ENABLE_VENDORED_GLEW)
+    list(APPEND A2XT_DEPS GLEW_Local)
+    list(APPEND A2XT_LIBS PGE_GLEW)
+endif()
+
+if(WIN32 AND (THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_DESKTOP_LEGACY))
+    # glu32 not needed or provided on ARM
+    if("${TARGET_PROCESSOR}" STREQUAL "i386" OR "${TARGET_PROCESSOR}" STREQUAL "x86_64")
+        list(APPEND A2XT_LIBS glu32)
+    endif()
+
+    list(APPEND A2XT_LIBS opengl32 gdi32)
+endif()
+
+if(PGE_SHARED_SDLMIXER)
+    if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE AND NOT ANDROID AND NOT NINTENDO_SWITCH)
+        find_library(_LIB_GL GL)
+        if(_LIB_GL)
+            list(APPEND A2XT_LIBS ${_LIB_GL})
+        endif()
+    else()
+        list(APPEND A2XT_LIBS shell32)
+    endif()
+endif()
+
+if(THEXTECH_CUSTOM_AUDIO_LIBRARY)
+    list(APPEND A2XT_LIBS gme vorbisidec ogg)
+endif()
+
 
 if(THEXTECH_ENABLE_DISCORD_RPC)
     list(APPEND A2XT_DEPS DiscordPRC_Local)
