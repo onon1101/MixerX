@@ -33,7 +33,7 @@ function(pge_set_nopie _target)
     endif()
 endfunction()
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE FALSE)
 
@@ -45,13 +45,6 @@ if(EMSCRIPTEN)
 endif()
 
 if(APPLE)
-    if(CMAKE_HOST_SYSTEM_VERSION VERSION_LESS 9)
-#        set(XTECH_PLIST_NAME "thextech.plist.tiger.in")
-#        set(XTECH_DEFAULT_ICNS "resources/tiger/thextech.icns")
-    else()
-#        set(XTECH_PLIST_NAME "thextech.plist.in")
-#        set(XTECH_DEFAULT_ICNS "resources/thextech.icns")
-    endif()
 
     if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET OR CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL "")
         if(CMAKE_HOST_SYSTEM_VERSION VERSION_LESS 9)
@@ -117,19 +110,6 @@ include(version.cmake)
 include(cmake/git_version.cmake)
 
 
-#configure_file(lib/CrashHandler/backtrace.h.in
-#               generated-include/lib/CrashHandler/backtrace.h)
-#include_directories(${CMAKE_CURRENT_BINARY_DIR}/generated-include)
-
-#if(NINTENDO_SWITCH)
-#    include_directories($ENV{DEVKITPRO}/portlibs/switch/include)
-#endif()
-
-#if(WIN32 OR EMSCRIPTEN OR HAIKU)
-#    set(USE_SYSTEM_LIBS_DEFAULT OFF)
-#else()
-#    set(USE_SYSTEM_LIBS_DEFAULT ON)
-#endif()
 set(USE_SYSTEM_LIBS_DEFAULT OFF)
 
 if(HAIKU OR VITA OR NINTENDO_SWITCH OR NINTENDO_WII OR NINTENDO_WIIU OR XTECH_MACOSX_TIGER)
@@ -353,21 +333,13 @@ if(USE_STATIC_LIBC)
     set(BUILD_SHARED_LIBS OFF)
 endif()
 
-#include(lib/Allocator/pool-allocator.cmake)
 include(3rdparty/DirManager/dirman.cmake)
 
 if(NOT VITA AND NOT NINTENDO_SWITCH AND NOT NINTENDO_3DS AND NOT NINTENDO_WII AND NOT NINTENDO_WIIU AND NOT NINTENDO_DS)
     include(3rdparty/FileMapper/FileMapper.cmake)
 endif()
 
-#include(lib/fmt/fmt.cmake)
 include(3rdparty/IniProcessor/IniProcessor.cmake)
-#include(lib/Utils/Utils.cmake)
-#include(lib/Logger/logger.cmake)
-#include(lib/AppPath/app_path.cmake)
-#include(lib/tclap/tclap.cmake)
-#include(lib/md5/md5.cmake)
-#include(lib/sdl_proxy/sdl_proxy.cmake)
 if(WIN32)
     include(lib/CrashHandler/StackWalker/StackWalker.cmake)
 endif()
@@ -403,11 +375,6 @@ if(EMSCRIPTEN)
     message("Is EMSCRIPTEN!")
     set(PGE_PRELOAD_ENVIRONMENT "/home/vitaly/.PGE_Project/_emscripten/thextech" CACHE STRING "Path to resources root to pack")
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
-#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2")
-    # -DIS_CXX -s USE_PTHREADS=1
-#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s WASM=1 -s 'BINARYEN_METHOD=\"native-wasm\"'")
-    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1  -s 'EMTERPRETIFY_FILE=\"pge_engine.binary\"'")
-    # -s \"EMTERPRETIFY_WHITELIST=['_main']\"
     if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug" OR CMAKE_BUILD_TYPE_LOWER STREQUAL "relwithdebinfo")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ASSERTIONS=1")
     endif()
@@ -416,19 +383,12 @@ if(EMSCRIPTEN)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s \"DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=['\\$autoResumeAudioContext', '\\$dynCall']\"") #-s USE_SDL=2
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s LLD_REPORT_UNDEFINED -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s ASYNCIFY=1 -lidbfs.js")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s \"EXPORTED_FUNCTIONS=['_main', '_unlockLoadingCustomState']\"")
-#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s 'BINARYEN_TRAP_MODE=\"clamp\"'")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s TOTAL_MEMORY=83886080 --no-heap-copy -s ALLOW_MEMORY_GROWTH=1")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s EXPORTED_RUNTIME_METHODS=ccall")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s BINARYEN_EXTRA_PASSES=coalesce-locals")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s MAX_WEBGL_VERSION=2")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s GL_ENABLE_GET_PROC_ADDRESS")
-#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s \"EXTRA_EXPORTED_RUNTIME_METHODS=['Pointer_stringify']\"")
-#    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --embed-file \"${_LANGAUGES_TEMP_FOLDER}\"@\"languages/\"")
-#    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_CONFIG_PACK}\"@\"configs/${PGE_PRELOAD_CONFIG_PACK_NAME}/\"")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_ENVIRONMENT}\"@\"/\"")
-#    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --shell-file '${CMAKE_CURRENT_SOURCE_DIR}/resources/emscripten/shell_minimal.html'")
-    # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --use-preload-cache")
-    # set(LINK_FLAGS "${LINK_FLAGS} -DIS_LINK -s USE_PTHREADS=1 -s FORCE_FILESYSTEM=1 --embed-file '${CMAKE_CURRENT_SOURCE_DIR}/@languages'")
 endif()
 
 set(A2XT_LIBS pgefl ${UTILS_LIBS})
@@ -494,11 +454,6 @@ elseif(NOT THEXTECH_NO_SDL_BUILD)
     else()
         list(APPEND A2XT_LIBS PGE_SDLMixerX_static)
     endif()
-
-# UNIX seems to be too general -- how to target desktop Linux specifically?
-#    if(UNIX AND (THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_DESKTOP_LEGACY OR THEXTECH_BUILD_GL_ES_MODERN OR THEXTECH_BUILD_GL_ES_LEGACY))
-#        list(APPEND A2XT_LIBS GL)
-#    endif()
 
     if(THEXTECH_ENABLE_VENDORED_GLEW)
         list(APPEND A2XT_DEPS GLEW_Local)
@@ -579,26 +534,14 @@ if(NOT NINTENDO_3DS AND NOT NINTENDO_WII AND NOT NINTENDO_WIIU AND NOT NINTENDO_
 endif()
 
 
-#if(NINTENDO_3DS OR NINTENDO_WII OR NOT PGE_MIN_PORT)
-#    list(APPEND LIB_SRC
-#        ${STACK_WALKER_SRCS}
-#        lib/CrashHandler/crash_handler.cpp
-#    )
-#    set(THEXTECH_CRASHHANDLER_SUPPORTED ON)
-#endif()
-
-
 if(APPLE)
-#    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/resources/file_icons/*.icns")
     list(APPEND LIB_SRC
         ${XTECH_DEFAULT_ICNS}
         ${PGE_FILE_ICONS}
-#        ${CMAKE_CURRENT_SOURCE_DIR}/resources/PkgInfo
     )
 
     if(XTECH_MACOSX_TIGER)
         set(THEXTECH_MAC_EXEX_GENERATED "${CMAKE_BINARY_DIR}/generated/TheXTechRun")
-#        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/resources/tiger/TheXTechRun.in" "${THEXTECH_MAC_EXEX_GENERATED}_tmp/TheXTechRun")
         file(COPY
             "${THEXTECH_MAC_EXEX_GENERATED}_tmp/TheXTechRun"
             DESTINATION "${CMAKE_BINARY_DIR}/generated/"
@@ -614,10 +557,6 @@ src/main.cpp)
 list(APPEND THEXTECH_SRC ${THEXTECH_HEADS_SRC})
 
 # ----------------------------------------------------
-
-if(WIN32 AND NOT EMSCRIPTEN)
-#    list(APPEND THEXTECH_SRC resources/thextech.rc)
-endif()
 
 if(THEXTECH_ENABLE_LUA)
     add_subdirectory(script)
@@ -640,16 +579,12 @@ if(ANDROID)
     add_custom_target(SDL_ApkPackLibs_makeDir ALL COMMAND ${CMAKE_COMMAND} -E make_directory "${APK_PACK_LIBS}")
 
     if(PGE_SHARED_SDLMIXER)
-#        add_library(SDL2_mixer_ext SHARED IMPORTED DEPENDS SDLMixerX_Local AudioCodecs_Local)
-#        set_target_properties(SDL2_mixer_ext PROPERTIES IMPORTED_LOCATION "${DEPENDENCIES_INSTALL_DIR}/lib/libSDL2_mixer_ext.so")
         add_custom_target(SDL_ApkPackLibs_mixerx ALL
             COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib/libSDL2_mixer_ext.so" "${APK_PACK_LIBS}"
             DEPENDS SDL_ApkPackLibs_makeDir ${DEPENDENCIES_INSTALL_DIR}/lib/libSDL2_mixer_ext.so AudioCodecs_Local
         )
         add_dependencies(thextech SDL_ApkPackLibs_mixerx)
 
-#        add_library(SDL2 SHARED IMPORTED DEPENDS AudioCodecs_Local)
-#        set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION "${DEPENDENCIES_INSTALL_DIR}/lib/libSDL2.so")
         add_custom_target(SDL_ApkPackLibs_sdl2 ALL
             COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib/libSDL2.so" "${APK_PACK_LIBS}"
             DEPENDS SDL_ApkPackLibs_makeDir ${DEPENDENCIES_INSTALL_DIR}/lib/libSDL2.so AudioCodecs_Local
@@ -657,15 +592,6 @@ if(ANDROID)
         add_dependencies(thextech SDL_ApkPackLibs_sdl2)
     endif()
 
-#    add_library(hidapi SHARED IMPORTED DEPENDS AudioCodecs_Local)
-#    set_target_properties(hidapi PROPERTIES IMPORTED_LOCATION "${DEPENDENCIES_INSTALL_DIR}/lib/libhidapi.so")
-
-# libhidapi.so is NO LONGER required since SDL 2.0.18
-#    add_custom_target(SDL_ApkPackLibs_hidapi ALL
-#        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib/libhidapi.so" "${APK_PACK_LIBS}"
-#        DEPENDS SDL_ApkPackLibs_makeDir "${DEPENDENCIES_INSTALL_DIR}/lib/libhidapi.so" AudioCodecs_Local
-#    )
-#    add_dependencies(thextech SDL_ApkPackLibs_hidapi)
 
 elseif(NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_3DS OR NINTENDO_DS)
     add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
@@ -697,7 +623,6 @@ if(APPLE)
     set_target_properties(thextech PROPERTIES
         OUTPUT_NAME "${THEXTECH_BUNDLE_NAME}"
         MACOSX_BUNDLE TRUE
-#        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/resources/${XTECH_PLIST_NAME}"
         MACOSX_BUNDLE_BUNDLE_NAME "${THEXTECH_BUNDLE_NAME}"
         MACOSX_BUNDLE_EXECUTABLE_NAME "${THEXTECH_EXECUTABLE_NAME_OUT}"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.thextech"
@@ -709,7 +634,6 @@ if(APPLE)
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/${XTECH_DEFAULT_ICNS}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-#    set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/resources/PkgInfo PROPERTIES MACOSX_PACKAGE_LOCATION "")
     if(XTECH_MACOSX_TIGER)
         set_source_files_properties("${THEXTECH_MAC_EXEX_GENERATED}" PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS")
     endif()
@@ -720,8 +644,6 @@ if(APPLE)
 
     if(THEXTECH_PRELOAD_ENVIRONMENT AND NOT THEXTECH_PRELOAD_ENVIRONMENT STREQUAL "")
         add_custom_command(TARGET thextech POST_BUILD
-#            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:thextech>/../Resources/assets"
-#            COMMAND ${CMAKE_COMMAND} -E copy_directory "${THEXTECH_PRELOAD_ENVIRONMENT}" "$<TARGET_FILE_DIR:thextech>/../Resources/assets"
             COMMENT "Copying assets into bundle..."
         )
         target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
@@ -1060,7 +982,6 @@ elseif(NINTENDO_3DS)
         NAME "TheXTech ${THEXTECH_VERSION_STRING}"
         DESCRIPTION "${SMDH_VERSION}"
         AUTHOR "Wohlstand and ds-sloth"
-#        ICON "${CMAKE_SOURCE_DIR}/resources/icon/thextech_48.png"
     )
 
     ctr_create_3dsx(thextech SMDH "thextech.smdh")
@@ -1160,8 +1081,6 @@ else()
             if(FLATPAK_BUILD)
                 set(FLATPAK_DESCRIPTION "TheXTech is an open-source continuation of the SMBX 1.3 platformer game engine. Its highest priority is full compatibility with the SMBX 1.3 content standard, but it also adds a number of enhancements and bugfixes." CACHE STRING "Description for the installable flatpak package.")
 
-#                configure_file("${CMAKE_CURRENT_SOURCE_DIR}/resources/flatpak/appdata.xml.in"
-#                               "${DEPENDENCIES_INSTALL_DIR}/share/metainfo/${THEXTECH_EXECUTABLE_NAME}.metainfo.xml")
                 install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/metainfo/${THEXTECH_EXECUTABLE_NAME}.metainfo.xml"
                         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/metainfo)
             endif()
