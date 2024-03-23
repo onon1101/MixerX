@@ -105,7 +105,7 @@ if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
 endif()
 
 # Version
-include(version.cmake)
+#include(version.cmake)
 # Default GIT version
 include(cmake/git_version.cmake)
 
