@@ -40,10 +40,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE FALSE)
 set(CMAKE_INSTALL_RPATH ".")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-if(EMSCRIPTEN)
-    set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-endif()
-
 if(APPLE)
 
     if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET OR CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL "")
@@ -59,49 +55,22 @@ if(APPLE)
     message("-> Mac OS X minimal version: ${THEXTECH_MACOS_MIN_VERSION}")
 endif()
 
-if(ANDROID)
-    set(DEPENDENCIES_INSTALL_DIR ${CMAKE_BINARY_DIR}/output-deps)
-else()
+
     set(DEPENDENCIES_INSTALL_DIR ${CMAKE_BINARY_DIR}/output)
-endif()
+
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/bin)
 
-foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
-    message("--> ${OUTPUTCONFIG}")
-    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
-endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
-
-set(PGE_INSTALL_DIRECTORY "TheXTech")
-
 include(cmake/build_props.cmake)
 
-if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-    # Update if necessary
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffloat-store")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffloat-store")
-endif()
-
-if(WIN32 AND NOT EMSCRIPTEN)
-    set(CMAKE_SHARED_LIBRARY_PREFIX "")
-endif()
-
-if(UNIX)
-    check_include_file(/opt/vc/include/bcm_host.h BCMHOST_H)
-endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 
 if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     add_definitions(-DDEBUG_BUILD)
-    if(CMAKE_COMPILER_IS_GNUCXX)
-        add_definitions(-D_GLIBCXX_DEBUG=1 -D_GLIBCXX_ASSERTIONS=1)
-    endif()
+
 endif()
 
 # Default GIT version
@@ -109,37 +78,16 @@ include(cmake/git_version.cmake)
 
 
 set(USE_SYSTEM_LIBS_DEFAULT OFF)
+set(USE_SYSTEM_SDL2_DEFAULT ${USE_SYSTEM_LIBS_DEFAULT})
+set(THEXTECH_ENABLE_TTF_SUPPORT_DEFAULT ON)
+set(THEXTECH_USE_ANGLE_TRANSLATOR_DEFAULT ON)
 
-if(HAIKU OR VITA OR NINTENDO_SWITCH OR NINTENDO_WII OR NINTENDO_WIIU OR XTECH_MACOSX_TIGER)
-    set(USE_SYSTEM_SDL2_DEFAULT ON)  # Should be used on Haiku, own SDL2 Haiku build on CMake is broken
-else()
-    set(USE_SYSTEM_SDL2_DEFAULT ${USE_SYSTEM_LIBS_DEFAULT})
-endif()
-
-if(NINTENDO_DS)
-    set(THEXTECH_ENABLE_TTF_SUPPORT_DEFAULT OFF)
-else()
-    set(THEXTECH_ENABLE_TTF_SUPPORT_DEFAULT ON)
-endif()
-
-if(APPLE OR WIN32 OR (CMAKE_SYSTEM_NAME STREQUAL "Linux"))
-    set(THEXTECH_USE_ANGLE_TRANSLATOR_DEFAULT ON)
-else()
-    set(THEXTECH_USE_ANGLE_TRANSLATOR_DEFAULT OFF)
-endif()
 
 option(USE_SYSTEM_LIBS "Use dependent libraries like SDL2, FreeImageLite and MixerX, installed in the system" ${USE_SYSTEM_LIBS_DEFAULT})
 option(USE_SYSTEM_SDL2 "Use SDL2 from a system even prefering system libraries" ${USE_SYSTEM_SDL2_DEFAULT})
-
 option(USE_STATIC_LIBC "Link libc and libstdc++ statically" OFF)
-
-if(NINTENDO_3DS OR NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_DS)
-    set(USE_STATIC_LIBC ON)
-endif()
-
-if(NINTENDO_3DS)
-    option(THEXTECH_CUSTOM_AUDIO_LIBRARY "Use the custom audio library instead of MixerX" OFF)
-endif()
+set(USE_STATIC_LIBC ON)
+option(THEXTECH_CUSTOM_AUDIO_LIBRARY "Use the custom audio library instead of MixerX" OFF)
 
 option(THEXTECH_BUILD_GL_DESKTOP_MODERN "On SDL builds, include the OpenGL 2.0+ Core/Compatibility renderer" ON)
 option(THEXTECH_BUILD_GL_ES_MODERN "On SDL builds, include the OpenGL ES 2.0+ renderer" ON)
@@ -197,18 +145,6 @@ if(APPLE)
     endif()
 endif()
 
-if(NOT APPLE AND NOT ANDROID AND NOT EMSCRIPTEN)
-    set(DEFAULT_THEXTECH_SOURCE_ASSETS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/assets") # For source packages creation with vendored assets
-    if(NOT EXISTS "${DEFAULT_THEXTECH_SOURCE_ASSETS_PATH}")
-        unset(DEFAULT_THEXTECH_SOURCE_ASSETS_PATH)
-    endif()
-
-    set(THEXTECH_FIXED_ASSETS_PATH "${DEFAULT_THEXTECH_FIXED_ASSETS_PATH}" CACHE STRING "Fixed assets path (The '/usr/share/games/<game-name>/' suggested). Unused by default.")
-    set(THEXTECH_USER_DIR_NAME "" CACHE STRING "The name of the user directory at user's home to store settings/episodes/etc. The 'PGE_Project/thextech' will be used by default.")
-    set(THEXTECH_SOURCE_ASSETS_PATH "${DEFAULT_THEXTECH_SOURCE_ASSETS_PATH}" CACHE STRING "Path to resources root used with the package to create")
-    set(THEXTECH_UNIX_INSTALL TRUE)
-endif()
-
 # ============ Customization ==end=========
 
 # ============ Platform-conf ==============
@@ -234,70 +170,6 @@ if(EMSCRIPTEN)
     string(CONFIGURE "${THEXTECH_MANIFEST_DESC}" THEXTECH_MANIFEST_DESC_OUT)
 endif()
 
-if(VITA)
-    message("Enabling PS Vita Support and fast-math flags.")
-
-    # Fast Math flags for Vita, ensuring -DVITA is passed to the compiler.
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffast-math -mtune=cortex-a9 -mfpu=neon -DVITA")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffast-math -mtune=cortex-a9 -mfpu=neon -DVITA")
-
-    # Disable annoying warning for Parameter passing.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-psabi")
-
-    set(THEXTECH_BUILD_GL_DESKTOP_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_DESKTOP_LEGACY OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_LEGACY OFF CACHE BOOL "" FORCE)
-endif()
-
-if(NINTENDO_SWITCH)
-    message("Enabling Nintendo Switch Support and fast-math flags.")
-
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE -DNINTENDO_SWITCH -D__SWITCH__")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE -DNINTENDO_SWITCH -D__SWITCH__")
-endif()
-
-if(NINTENDO_WII OR NINTENDO_3DS OR NINTENDO_DS)
-    set(PGE_MIN_PORT ON)
-    set(THEXTECH_NO_ARGV_HANDLING ON)
-    add_compile_definitions(PGE_MIN_PORT)
-
-    set(THEXTECH_BUILD_GL_DESKTOP_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_DESKTOP_LEGACY OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_LEGACY OFF CACHE BOOL "" FORCE)
-endif()
-
-if(NINTENDO_WIIU)
-    set(THEXTECH_NO_ARGV_HANDLING ON)
-    set(THEXTECH_BUILD_GL_DESKTOP_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_DESKTOP_LEGACY OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_LEGACY OFF CACHE BOOL "" FORCE)
-endif()
-
-if(THEXTECH_CLI_BUILD)
-    set(THEXTECH_BUILD_GL_DESKTOP_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_DESKTOP_LEGACY OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_LEGACY OFF CACHE BOOL "" FORCE)
-endif()
-
-if(THEXTECH_CLI_BUILD OR PGE_MIN_PORT OR EMSCRIPTEN)
-    set(RANGE_ARR_UNSAFE_MODE ON)
-endif()
-
-if(NINTENDO_DS)
-    set(THEXTECH_ENABLE_AUDIO_FX OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_NO_SDL_BUILD ON CACHE BOOL "" FORCE)
-endif()
-
-if(ANDROID)
-    set(THEXTECH_BUILD_GL_DESKTOP_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_DESKTOP_LEGACY OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_LEGACY ON CACHE BOOL "")
-endif()
-
 if(APPLE OR WIN32)
     set(THEXTECH_BUILD_GL_ES_MODERN OFF CACHE BOOL "" FORCE)
     set(THEXTECH_BUILD_GL_ES_LEGACY OFF CACHE BOOL "" FORCE)
@@ -305,17 +177,6 @@ endif()
 
 # 32-bit Android special case, temporarily disabled for some experiments
 
-if(EMSCRIPTEN)
-    set(THEXTECH_BUILD_GL_DESKTOP_MODERN OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_DESKTOP_LEGACY OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_LEGACY      OFF CACHE BOOL "" FORCE)
-endif()
-
-if(NINTENDO_SWITCH)
-    set(THEXTECH_BUILD_GL_ES_MODERN      OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_ES_LEGACY      OFF CACHE BOOL "" FORCE)
-    set(THEXTECH_BUILD_GL_DESKTOP_LEGACY OFF CACHE BOOL "" FORCE)
-endif()
 
 # ============ Platform-conf ==end=========
 
@@ -324,15 +185,11 @@ set(Moondust_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}) # Don't install PGE-FL libr
 add_subdirectory(3rdparty/PGE_File_Formats)
 mark_as_advanced(WITH_UNIT_TESTS PGEFL_QT_SUPPORT)
 
-if(USE_STATIC_LIBC)
-    set(BUILD_SHARED_LIBS OFF)
-endif()
+include(3rdparty/DirManager/dirman.cmake)
 
-#include(3rdparty/DirManager/dirman.cmake)
-#
-#if(NOT VITA AND NOT NINTENDO_SWITCH AND NOT NINTENDO_3DS AND NOT NINTENDO_WII AND NOT NINTENDO_WIIU AND NOT NINTENDO_DS)
-#    include(3rdparty/FileMapper/FileMapper.cmake)
-#endif()
+if(NOT VITA AND NOT NINTENDO_SWITCH AND NOT NINTENDO_3DS AND NOT NINTENDO_WII AND NOT NINTENDO_WIIU AND NOT NINTENDO_DS)
+    include(3rdparty/FileMapper/FileMapper.cmake)
+endif()
 
 # TODO: Don't touch
 include(3rdparty/IniProcessor/IniProcessor.cmake)
@@ -383,14 +240,13 @@ if(EMSCRIPTEN)
 endif()
 
 set(A2XT_LIBS pgefl ${UTILS_LIBS})
-set(A2XT_INCS src lib 3rdparty)
+set(A2XT_INCS src lib 3rdparty include)
 set(A2XT_DEPS)
 
 add_library(A2XT_Int INTERFACE)
 
 if(THEXTECH_ENABLE_TTF_SUPPORT)
     list(APPEND A2XT_DEPS FREETYPE_Local)
-    list(APPEND A2XT_LIBS PGE_FreeType)
     if(TARGET PGE_HarfBuzz)
         list(APPEND A2XT_DEPS HARFBUZZ_Local)
         list(APPEND A2XT_LIBS PGE_HarfBuzz)
@@ -402,81 +258,83 @@ if(THEXTECH_ENABLE_LUA)
     list(APPEND A2XT_INCS script/include)
 endif()
 
-#include(cmake/library_glew.cmake)
+file(GLOB_RECURSE SRC_FILES src/*)
+file(GLOB_RECURSE HEADER_FILES include/*)
+list(APPEND A2XT_INCS HEADER_FILES)
 
-if(USE_SYSTEM_LIBS)
-    find_package(SDL2 REQUIRED)
+include(FetchContent)
+include(cmake/Library_GL.cmake)
+include(cmake/Library_GLM.cmake)
+#include(cmake/Library_SDL2.cmake)
+include(cmake/Library_Spdlog.cmake)
+include(cmake/Library_SDL2_ttf.cmake)
+include(cmake/Library_SDL2_image.cmake)
+list(APPEND A2XT_LIBS Library_SDL2_image
+        Library_SDL2_ttf
+        Library_GL
+        Library_GLM
+        Library_Spdlog ${OPENGL_LIBRARY})
 
-    find_library(MIXERX_LIB NAMES SDL2_mixer_ext)
-    find_path(MIXERX_HEAD_DIR SDL_mixer_ext.h PATH_SUFFIXES SDL2)
+list(APPEND A2XT_INCS ${SDL2_INCLUDE_DIRS} ${MixerX_INCLUDE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/include ${GLEW_INCLUDE_DIR}
+        ${GLM_INCLUDE_DIR} ${Spdlog_INCLUDE_DIR})
 
-    find_library(FREEIMAGELITE_LIB NAMES FreeImageLite)
-    find_path(FREEIMAGELITE_HEAD_DIR NAMES FreeImageLite.h)
 
-    if(MINGW AND NOT SDL2_LIBRARIES)
-        set(SDL2_LIBRARIES mingw32 SDL2main SDL2)
+
+# install SDLMixerX
+include(cmake/library_FreeImage.cmake)
+list(APPEND A2XT_DEPS FreeImage_Local)
+list(APPEND A2XT_LIBS PGE_FreeImage)
+
+include(cmake/library_SDLMixerX.cmake)
+list(APPEND A2XT_INCS "${DEPENDENCIES_INSTALL_DIR}/include" ${SDL2_INCLUDE_DIRS})
+
+if(NOT USE_SYSTEM_ZLIB) # Depend on ZLib at AudioCodecs
+    if(TARGET FREETYPE_Local)
+        add_dependencies(FREETYPE_Local AudioCodecs_Local)
     endif()
-
-    list(APPEND A2XT_LIBS ${FREEIMAGELITE_LIB} ${MIXERX_LIB} "${SDL2_LIBRARIES}")
-    list(APPEND A2XT_INCS ${SDL2_INCLUDE_DIRS} ${MIXERX_HEAD_DIR} ${FREEIMAGELITE_HEAD_DIR})
-elseif(NOT THEXTECH_NO_SDL_BUILD)
-    include(cmake/library_FreeImage.cmake)
-    list(APPEND A2XT_DEPS FreeImage_Local)
-    list(APPEND A2XT_LIBS PGE_FreeImage)
-
-    include(cmake/library_SDLMixerX.cmake)
-    list(APPEND A2XT_INCS "${DEPENDENCIES_INSTALL_DIR}/include" ${SDL2_INCLUDE_DIRS})
-
-    if(NOT USE_SYSTEM_ZLIB) # Depend on ZLib at AudioCodecs
-        if(TARGET FREETYPE_Local)
-            add_dependencies(FREETYPE_Local AudioCodecs_Local)
-        endif()
-        add_dependencies(FreeImage_Local AudioCodecs_Local)
-    endif()
-
-    if(NOT THEXTECH_NO_MIXER_X)
-        list(APPEND A2XT_DEPS SDLMixerX_Local)
-    else()
-        list(APPEND A2XT_DEPS AudioCodecs_Local)
-    endif()
-
-    if(PGE_SHARED_SDLMIXER)
-        list(APPEND A2XT_LIBS PGE_SDLMixerX)
-    else()
-        list(APPEND A2XT_LIBS PGE_SDLMixerX_static)
-    endif()
-
-    if(THEXTECH_ENABLE_VENDORED_GLEW)
-        list(APPEND A2XT_DEPS GLEW_Local)
-        list(APPEND A2XT_LIBS PGE_GLEW)
-    endif()
-
-    if(WIN32 AND (THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_DESKTOP_LEGACY))
-        # glu32 not needed or provided on ARM
-        if("${TARGET_PROCESSOR}" STREQUAL "i386" OR "${TARGET_PROCESSOR}" STREQUAL "x86_64")
-            list(APPEND A2XT_LIBS glu32)
-        endif()
-
-        list(APPEND A2XT_LIBS opengl32 gdi32)
-    endif()
-
-    if(PGE_SHARED_SDLMIXER)
-        if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE AND NOT ANDROID AND NOT NINTENDO_SWITCH)
-            find_library(_LIB_GL GL)
-            if(_LIB_GL)
-                list(APPEND A2XT_LIBS ${_LIB_GL})
-            endif()
-        else()
-            list(APPEND A2XT_LIBS shell32)
-        endif()
-    endif()
-
-    if(THEXTECH_CUSTOM_AUDIO_LIBRARY)
-        list(APPEND A2XT_LIBS gme vorbisidec ogg)
-    endif()
-
-    list(APPEND A2XT_LIBS PGE_ZLib)
+    add_dependencies(FreeImage_Local AudioCodecs_Local)
 endif()
+
+list(APPEND A2XT_DEPS SDLMixerX_Local)
+
+if(PGE_SHARED_SDLMIXER)
+    list(APPEND A2XT_LIBS PGE_SDLMixerX)
+else()
+    list(APPEND A2XT_LIBS PGE_SDLMixerX_static)
+endif()
+
+if(THEXTECH_ENABLE_VENDORED_GLEW)
+    list(APPEND A2XT_DEPS GLEW_Local)
+    list(APPEND A2XT_LIBS PGE_GLEW)
+endif()
+
+if(WIN32 AND (THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_DESKTOP_LEGACY))
+    # glu32 not needed or provided on ARM
+    if("${TARGET_PROCESSOR}" STREQUAL "i386" OR "${TARGET_PROCESSOR}" STREQUAL "x86_64")
+        list(APPEND A2XT_LIBS glu32)
+    endif()
+
+    list(APPEND A2XT_LIBS opengl32 gdi32)
+endif()
+
+if(PGE_SHARED_SDLMIXER)
+    if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE AND NOT ANDROID AND NOT NINTENDO_SWITCH)
+        find_library(_LIB_GL GL)
+        if(_LIB_GL)
+            list(APPEND A2XT_LIBS ${_LIB_GL})
+        endif()
+    else()
+        list(APPEND A2XT_LIBS shell32)
+    endif()
+endif()
+
+if(THEXTECH_CUSTOM_AUDIO_LIBRARY)
+    list(APPEND A2XT_LIBS gme vorbisidec ogg)
+endif()
+
+list(APPEND A2XT_LIBS PGE_ZLib)
+# end sdl2
 
 if(THEXTECH_ENABLE_DISCORD_RPC)
     list(APPEND A2XT_DEPS DiscordPRC_Local)
@@ -508,6 +366,13 @@ target_include_directories(A2XT_Int INTERFACE ${A2XT_INCS})
 
 
 
+
+
+
+
+
+
+
 if(APPLE)
     list(APPEND LIB_SRC
         ${XTECH_DEFAULT_ICNS}
@@ -528,7 +393,7 @@ endif()
 set(THEXTECH_SRC
 src/main.cpp)
 
-list(APPEND THEXTECH_SRC ${THEXTECH_HEADS_SRC})
+list(APPEND THEXTECH_SRC ${THEXTECH_HEADS_SRC} ${SRC_FILES})
 
 # ----------------------------------------------------
 
@@ -564,6 +429,9 @@ else()
     add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
     pge_set_nopie(thextech)
 endif()
+# DOTO: test
+target_compile_definitions(thextech
+        PRIVATE PTSD_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_dependencies(thextech git_version)
 target_include_directories(thextech PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated-include")
@@ -597,121 +465,22 @@ if(APPLE)
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/${XTECH_DEFAULT_ICNS}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-#    if(XTECH_MACOSX_TIGER)
-#        set_source_files_properties("${THEXTECH_MAC_EXEX_GENERATED}" PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS")
-#    endif()
-
-#    if(THEXTECH_CUSTOM_ICON_PATH AND NOT THEXTECH_CUSTOM_ICON_PATH STREQUAL "")
-#        set_source_files_properties("${THEXTECH_CUSTOM_ICON_PATH}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-#    endif()
-
-#    if(THEXTECH_PRELOAD_ENVIRONMENT AND NOT THEXTECH_PRELOAD_ENVIRONMENT STREQUAL "")
-#        add_custom_command(TARGET thextech POST_BUILD
-#            COMMENT "Copying assets into bundle..."
-#        )
-#        target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
-#    endif()
-
-#    if(THEXTECH_PRELOAD_ENVIRONMENT_MANUALLY)
-#        target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
-#    endif()
-
-#    if(THEXTECH_CUSTOM_USERDATA_DIR_NAME AND NOT THEXTECH_CUSTOM_USERDATA_DIR_NAME STREQUAL "")
-#        target_compile_definitions(thextech PRIVATE -DUSERDATA_ROOT_NAME="${THEXTECH_CUSTOM_USERDATA_DIR_NAME}")
-#    endif()
-
-#    if(XTECH_MACOSX_TIGER) # Use X11 mode on Mac OS X Tiger
-#        target_compile_definitions(thextech PRIVATE -DUSE_APPLE_X11)
-#    endif()
 
     check_library_exists(iconv iconv_open "" HAVE_LIBICONV)
     if(HAVE_LIBICONV)
         target_link_libraries(A2XT_Int INTERFACE iconv)
     endif()
 
-#    if(PGE_USE_LUAJIT)
-#        # Required to link on 64-bit macOS
-#        # See: http://luajit.org/install.html
-#        set_property(TARGET thextech APPEND_STRING PROPERTY
-#            LINK_FLAGS " -pagezero_size 10000 -image_base 100000000"
-#        )
-#    endif()
 endif()
-
-#if(ANDROID)
-#    target_link_libraries(A2XT_Int INTERFACE log)
-#
-#    if(THEXTECH_BUILD_GL_ES_LEGACY OR THEXTECH_BUILD_GL_ES_MODERN)
-#        target_link_libraries(A2XT_Int INTERFACE EGL)
-#    endif()
-#endif()
-
-#if(NINTENDO_SWITCH)
-#    target_link_libraries(A2XT_Int INTERFACE nx)
-#
-#    if(THEXTECH_BUILD_GL_DESKTOP_MODERN)
-#        target_link_libraries(A2XT_Int INTERFACE glad)
-#    endif()
-#
-#    # Set explicit flags for this project
-#    target_compile_definitions(thextech PRIVATE -D__SWITCH__ -DNO_INTPTROC)
-#endif()
-
-#if(VITA)
-#    # Link Vita specific libraries to the generic interface.
-#    target_link_libraries(A2XT_Int INTERFACE ${VITA_ADDTL_LIBS})
-#
-#    # Set explicit flags for this project
-#    target_compile_definitions(thextech PRIVATE
-#        -DVITA -DNO_SCREENSHOT -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -DNO_INTPTROC)
-#endif()
-
-#if(WIN32 AND WINDOWS_STORE)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_WINRT)
-#endif()
-
-#if(NINTENDO_3DS)
-#    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX -DPGE_NO_THREADING -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__3DS__)
-#elseif(NINTENDO_WII)
-#    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__WII__)
-#elseif(NINTENDO_WIIU)
-#    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX)
-#elseif(NINTENDO_DS)
-#    target_link_libraries(thextech PRIVATE filesystem)
-#    target_link_libraries(thextech PRIVATE fat)
-#    target_link_libraries(thextech PRIVATE mm9)
-#    target_link_libraries(thextech PRIVATE nds9)
-#    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__16M__)
-#    set(CMAKE_EXE_LINKER_FLAGS "-L${NDS_ROOT}/lib -specs=dsi_arm9.specs")
-#elseif(PGE_MIN_PORT)
-#    target_compile_definitions(thextech PRIVATE -DLOW_MEM)
-#endif()
-
-#if(NINTENDO_DS OR NINTENDO_3DS OR NINTENDO_WII OR NINTENDO_SWITCH OR ANDROID OR EMSCRIPTEN)
-#    # Disable language tools at non-desktop platforms
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_DISABLE_LANG_TOOLS)
-#endif()
 
 if((UNIX OR NINTENDO_SWITCH OR ANDROID OR APPLE) AND NOT EMSCRIPTEN)
     # Allow hotswapping renderer on fully tested platforms
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_RESTART_RENDERER_SUPPORTED)
 endif()
 
-#if(THEXTECH_NO_SDL_BUILD)
-#    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DTHEXTECH_NO_SDL_BUILD)
-#endif()
-#
-#if(THEXTECH_CLI_BUILD)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_CLI_BUILD)
-#endif()
-
 if(THEXTECH_BUILD_GL_DESKTOP_MODERN)
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_DESKTOP_MODERN)
 endif()
-
-#if(THEXTECH_BUILD_GL_ES_MODERN)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_ES_MODERN)
-#endif()
 
 if(THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_ES_MODERN)
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_MODERN)
@@ -721,105 +490,14 @@ if(THEXTECH_BUILD_GL_DESKTOP_LEGACY)
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_DESKTOP_LEGACY)
 endif()
 
-#if(THEXTECH_BUILD_GL_ES_LEGACY)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_ES_LEGACY)
-#endif()
-#
-#if(THEXTECH_ENABLE_NEW_USER_PATHS)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_NEW_USER_PATHS)
-#endif()
-
-#if(THEXTECH_ENABLE_WIP_FEATURES)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_WIP_FEATURES)
-#endif()
-#
-#if(THEXTECH_FIXED_ASSETS_PATH AND NOT THEXTECH_FIXED_ASSETS_PATH STREQUAL "")
-#    target_compile_definitions(thextech PRIVATE -DFIXED_ASSETS_PATH="${THEXTECH_FIXED_ASSETS_PATH}")
-#endif()
-
-#if(THEXTECH_USER_DIR_NAME AND NOT THEXTECH_USER_DIR_NAME STREQUAL "")
-#    target_compile_definitions(thextech PRIVATE -DUSER_DIR_NAME="${THEXTECH_USER_DIR_NAME}")
-#endif()
-#
-#if(THEXTECH_GAME_NAME_TITLE AND NOT THEXTECH_GAME_NAME_TITLE STREQUAL "")
-#    target_compile_definitions(thextech PRIVATE -DCUSTOM_GAME_NAME_TITLE="${THEXTECH_GAME_NAME_TITLE}")
-#endif()
-#
-#if(THEXTECH_CREDITS_URL AND NOT THEXTECH_CREDITS_URL STREQUAL "")
-#    target_compile_definitions(thextech PRIVATE -DCUSTOM_CREDITS_URL="${THEXTECH_CREDITS_URL}")
-#endif()
-
-#if(THEXTECH_CREDITS_TITLE AND NOT THEXTECH_CREDITS_TITLE STREQUAL "")
-#    target_compile_definitions(thextech PRIVATE -DCUSTOM_CREDITS_TITLE="${THEXTECH_CREDITS_TITLE}")
-#endif()
-#
-#if(THEXTECH_ENABLE_LUA)
-#    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_LUA)
-#endif()
-#
-#if(THEXTECH_ENABLE_INTEGRATOR)
-#    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_INTEGRATOR)
-#endif()
-#
-#if(THEXTECH_ENABLE_DISCORD_RPC)
-#    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_DISCORD_RPC -DXTECH_DISCORD_APPID=${THEXTECH_DISCORD_APPID})
-#endif()
-
-#if(ENABLE_ADDRESS_SANITIZER)
-#    target_compile_options(thextech PRIVATE -fsanitize=address)
-#    target_link_options(thextech PRIVATE -fsanitize=address)
-#endif()
 
 target_include_directories(thextech PRIVATE ${A2XT_INCS})
 target_link_libraries(thextech PRIVATE A2XT_Int)
-
-#if(RANGE_ARR_USE_HEAP)
-#    target_compile_definitions(thextech PRIVATE -DRANGE_ARR_USE_HEAP)
-#endif()
-#
-#if(RANGE_ARR_UNSAFE_MODE)
-#    target_compile_definitions(thextech PRIVATE -DRANGE_ARR_UNSAFE_MODE)
-#endif()
-#
-#if(ENABLE_ANTICHEAT_TRAP)
-#    target_compile_definitions(thextech PRIVATE -DENABLE_ANTICHEAT_TRAP)
-#endif()
-#
-#if(ENABLE_OLD_CREDITS)
-#    target_compile_definitions(thextech PRIVATE -DENABLE_OLD_CREDITS)
-#    set_target_properties(thextech PROPERTIES OUTPUT_NAME "smbx")
-#endif()
 
 if(NOT ENABLE_LOGGING)
     target_compile_definitions(thextech PRIVATE -DDISABLE_LOGGING -DNO_FILE_LOGGING)
 endif()
 
-#if(EMSCRIPTEN)
-#    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DNO_FILE_LOGGING)
-#endif()
-#
-#if(THEXTECH_NO_ARGV_HANDLING)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_NO_ARGV_HANDLING)
-#endif()
-#
-#if(THEXTECH_INTERPROC_SUPPORTED)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_INTERPROC_SUPPORTED)
-#endif()
-#
-#if(THEXTECH_FILEMAPPER_SUPPORTED)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_FILEMAPPER_SUPPORTED)
-#endif()
-
-#if(THEXTECH_CRASHHANDLER_SUPPORTED)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_CRASHHANDLER_SUPPORTED)
-#endif()
-#
-## ======================= Render specific global macros ========================
-#if(EMSCRIPTEN)
-#    target_compile_definitions(thextech PRIVATE
-#        -DNO_WINDOW_FOCUS_TRACKING  # Don't track for window focus
-#    )
-#endif()
 
 if(NOT EMSCRIPTEN AND
    NOT NINTENDO_3DS AND
@@ -832,18 +510,6 @@ if(NOT EMSCRIPTEN AND
     )
 endif()
 
-#if(ANDROID)
-#    target_compile_definitions(thextech PRIVATE
-#        -DUSE_RENDER_BLOCKING
-#    )
-#endif()
-
-#if(ANDROID OR VITA OR NINTENDO_3DS OR NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_SWITCH OR PGE_MIN_PORT OR THEXTECH_NO_SDL_BUILD)
-#    target_compile_definitions(thextech PRIVATE
-#        -DRENDER_FULLSCREEN_ALWAYS  # Game works always fullscreen
-#        -DNO_WINDOW_FOCUS_TRACKING  # Don't track for window focus
-#    )
-#endif()
 
 # ==============================================================================
 
@@ -851,29 +517,9 @@ if(NOT USE_SYSTEM_LIBS AND A2XT_DEPS)
     add_dependencies(thextech ${A2XT_DEPS})
 endif()
 
-#if(THEXTECH_IS_BIG_ENDIAN)
-#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BIG_ENDIAN -DSOUND_FX_BIG_ENDIAN)
-#endif()
-
 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_WORDSIZE=64)
-elseif(CMAKE_SIZEOF_VOID_P MATCHES "4")
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_WORDSIZE=32)
-else()
-    message(WARNING "Unknown word size ${CMAKE_SIZEOF_VOID_P}!")
 endif()
-
-#if(USE_STATIC_LIBC AND NOT USE_SYSTEM_LIBS)
-#    if(NOT APPLE AND NOT MSVC)
-##        target_link_libraries(thextech PRIVATE -static)
-#        set_property(TARGET thextech APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
-#    endif()
-#
-#    if(MSVC)
-#        target_compile_options(thextech PRIVATE /MT)
-#        target_link_options(thextech PRIVATE /INCREMENTAL:NO /NODEFAULTLIB:MSVCRT)
-#    endif()
-#endif()
 
 if (Backtrace_FOUND)
     set_property(TARGET thextech APPEND_STRING PROPERTY LINK_FLAGS " ${Backtrace_LIBRARIES}")
@@ -884,8 +530,6 @@ if(WIN32)
     target_compile_definitions(thextech PRIVATE -DNOMINMAX)
     target_link_libraries(thextech PRIVATE "version" dbghelp) # needed by StackWalker
 endif()
-
-#include(cmake/deploy.cmake)
 
 if(APPLE)
     install(TARGETS thextech DESTINATION .)
