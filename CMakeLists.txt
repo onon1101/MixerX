@@ -280,7 +280,6 @@ list(APPEND A2XT_INCS ${SDL2_INCLUDE_DIRS} ${MixerX_INCLUDE_DIR}
         ${GLM_INCLUDE_DIR} ${Spdlog_INCLUDE_DIR})
 
 
-
 # install SDLMixerX
 include(cmake/library_FreeImage.cmake)
 list(APPEND A2XT_DEPS FreeImage_Local)
@@ -422,15 +421,17 @@ if(ANDROID)
 
 
 elseif(NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_3DS OR NINTENDO_DS)
-#    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
+    add_executable(thextech_e ${THEXTECH_SRC} ${LIB_SRC})
     add_library(thextech ${THEXTECH_SRC} ${LIB_SRC})
     set_target_properties(thextech PROPERTIES SUFFIX ".elf")
 
 else()
-#    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
+    add_executable(thextech_e ${THEXTECH_SRC} ${LIB_SRC})
     add_library(thextech ${THEXTECH_SRC} ${LIB_SRC})
     pge_set_nopie(thextech)
 endif()
+
+
 # DOTO: test
 target_compile_definitions(thextech
         PRIVATE PTSD_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
@@ -495,6 +496,12 @@ endif()
 
 target_include_directories(thextech PRIVATE ${A2XT_INCS})
 target_link_libraries(thextech PRIVATE A2XT_Int)
+
+set(DEPENDENCY_INCLUDE_DIRS ${A2XT_INCS})
+set(DEPENDENCY_INCLUDE_DIRS ${DEPENDENCY_INCLUDE_DIRS} PARENT_SCOPE)
+
+set(DEPENDENCY_LINK_LIBRARIES A2XT_Int)
+set(DEPENDENCY_LINK_LIBRARIES ${DEPENDENCY_LINK_LIBRARIES} PARENT_SCOPE)
 
 if(NOT ENABLE_LOGGING)
     target_compile_definitions(thextech PRIVATE -DDISABLE_LOGGING -DNO_FILE_LOGGING)
