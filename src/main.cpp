@@ -18,7 +18,7 @@ int main(int argv, char** args)
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
     // Load audio files
-    Mix_Music *backgroundSound = Mix_LoadMUS("/Users/chenshiang/Desktop/TheXTech/boss_1.ogg");
+    Mix_Music *backgroundSound = Mix_LoadMUS("/Users/chenshiang/Desktop/MixerX/boss_1.ogg");
     Mix_Chunk *jumpEffect = Mix_LoadWAV("/Users/chenshiang/Desktop/sdl2-mixer-sample/cmake-build-debug/JumpEffect.wav");
     Mix_Chunk *laserEffect = Mix_LoadWAV("/Users/chenshiang/Desktop/sdl2-mixer-sample/cmake-build-debug/LaserEffect.wav");
 

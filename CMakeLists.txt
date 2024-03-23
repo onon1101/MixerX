@@ -422,11 +422,13 @@ if(ANDROID)
 
 
 elseif(NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_3DS OR NINTENDO_DS)
-    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
+#    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
+    add_library(thextech ${THEXTECH_SRC} ${LIB_SRC})
     set_target_properties(thextech PROPERTIES SUFFIX ".elf")
 
 else()
-    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
+#    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
+    add_library(thextech ${THEXTECH_SRC} ${LIB_SRC})
     pge_set_nopie(thextech)
 endif()
 # DOTO: test
