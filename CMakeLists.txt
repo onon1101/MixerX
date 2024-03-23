@@ -597,121 +597,121 @@ if(APPLE)
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/${XTECH_DEFAULT_ICNS}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    if(XTECH_MACOSX_TIGER)
-        set_source_files_properties("${THEXTECH_MAC_EXEX_GENERATED}" PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS")
-    endif()
+#    if(XTECH_MACOSX_TIGER)
+#        set_source_files_properties("${THEXTECH_MAC_EXEX_GENERATED}" PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS")
+#    endif()
 
-    if(THEXTECH_CUSTOM_ICON_PATH AND NOT THEXTECH_CUSTOM_ICON_PATH STREQUAL "")
-        set_source_files_properties("${THEXTECH_CUSTOM_ICON_PATH}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    endif()
+#    if(THEXTECH_CUSTOM_ICON_PATH AND NOT THEXTECH_CUSTOM_ICON_PATH STREQUAL "")
+#        set_source_files_properties("${THEXTECH_CUSTOM_ICON_PATH}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+#    endif()
 
-    if(THEXTECH_PRELOAD_ENVIRONMENT AND NOT THEXTECH_PRELOAD_ENVIRONMENT STREQUAL "")
-        add_custom_command(TARGET thextech POST_BUILD
-            COMMENT "Copying assets into bundle..."
-        )
-        target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
-    endif()
+#    if(THEXTECH_PRELOAD_ENVIRONMENT AND NOT THEXTECH_PRELOAD_ENVIRONMENT STREQUAL "")
+#        add_custom_command(TARGET thextech POST_BUILD
+#            COMMENT "Copying assets into bundle..."
+#        )
+#        target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
+#    endif()
 
-    if(THEXTECH_PRELOAD_ENVIRONMENT_MANUALLY)
-        target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
-    endif()
+#    if(THEXTECH_PRELOAD_ENVIRONMENT_MANUALLY)
+#        target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
+#    endif()
 
-    if(THEXTECH_CUSTOM_USERDATA_DIR_NAME AND NOT THEXTECH_CUSTOM_USERDATA_DIR_NAME STREQUAL "")
-        target_compile_definitions(thextech PRIVATE -DUSERDATA_ROOT_NAME="${THEXTECH_CUSTOM_USERDATA_DIR_NAME}")
-    endif()
+#    if(THEXTECH_CUSTOM_USERDATA_DIR_NAME AND NOT THEXTECH_CUSTOM_USERDATA_DIR_NAME STREQUAL "")
+#        target_compile_definitions(thextech PRIVATE -DUSERDATA_ROOT_NAME="${THEXTECH_CUSTOM_USERDATA_DIR_NAME}")
+#    endif()
 
-    if(XTECH_MACOSX_TIGER) # Use X11 mode on Mac OS X Tiger
-        target_compile_definitions(thextech PRIVATE -DUSE_APPLE_X11)
-    endif()
+#    if(XTECH_MACOSX_TIGER) # Use X11 mode on Mac OS X Tiger
+#        target_compile_definitions(thextech PRIVATE -DUSE_APPLE_X11)
+#    endif()
 
     check_library_exists(iconv iconv_open "" HAVE_LIBICONV)
     if(HAVE_LIBICONV)
         target_link_libraries(A2XT_Int INTERFACE iconv)
     endif()
 
-    if(PGE_USE_LUAJIT)
-        # Required to link on 64-bit macOS
-        # See: http://luajit.org/install.html
-        set_property(TARGET thextech APPEND_STRING PROPERTY
-            LINK_FLAGS " -pagezero_size 10000 -image_base 100000000"
-        )
-    endif()
+#    if(PGE_USE_LUAJIT)
+#        # Required to link on 64-bit macOS
+#        # See: http://luajit.org/install.html
+#        set_property(TARGET thextech APPEND_STRING PROPERTY
+#            LINK_FLAGS " -pagezero_size 10000 -image_base 100000000"
+#        )
+#    endif()
 endif()
 
-if(ANDROID)
-    target_link_libraries(A2XT_Int INTERFACE log)
+#if(ANDROID)
+#    target_link_libraries(A2XT_Int INTERFACE log)
+#
+#    if(THEXTECH_BUILD_GL_ES_LEGACY OR THEXTECH_BUILD_GL_ES_MODERN)
+#        target_link_libraries(A2XT_Int INTERFACE EGL)
+#    endif()
+#endif()
 
-    if(THEXTECH_BUILD_GL_ES_LEGACY OR THEXTECH_BUILD_GL_ES_MODERN)
-        target_link_libraries(A2XT_Int INTERFACE EGL)
-    endif()
-endif()
+#if(NINTENDO_SWITCH)
+#    target_link_libraries(A2XT_Int INTERFACE nx)
+#
+#    if(THEXTECH_BUILD_GL_DESKTOP_MODERN)
+#        target_link_libraries(A2XT_Int INTERFACE glad)
+#    endif()
+#
+#    # Set explicit flags for this project
+#    target_compile_definitions(thextech PRIVATE -D__SWITCH__ -DNO_INTPTROC)
+#endif()
 
-if(NINTENDO_SWITCH)
-    target_link_libraries(A2XT_Int INTERFACE nx)
+#if(VITA)
+#    # Link Vita specific libraries to the generic interface.
+#    target_link_libraries(A2XT_Int INTERFACE ${VITA_ADDTL_LIBS})
+#
+#    # Set explicit flags for this project
+#    target_compile_definitions(thextech PRIVATE
+#        -DVITA -DNO_SCREENSHOT -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -DNO_INTPTROC)
+#endif()
 
-    if(THEXTECH_BUILD_GL_DESKTOP_MODERN)
-        target_link_libraries(A2XT_Int INTERFACE glad)
-    endif()
+#if(WIN32 AND WINDOWS_STORE)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_WINRT)
+#endif()
 
-    # Set explicit flags for this project
-    target_compile_definitions(thextech PRIVATE -D__SWITCH__ -DNO_INTPTROC)
-endif()
+#if(NINTENDO_3DS)
+#    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX -DPGE_NO_THREADING -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__3DS__)
+#elseif(NINTENDO_WII)
+#    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__WII__)
+#elseif(NINTENDO_WIIU)
+#    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX)
+#elseif(NINTENDO_DS)
+#    target_link_libraries(thextech PRIVATE filesystem)
+#    target_link_libraries(thextech PRIVATE fat)
+#    target_link_libraries(thextech PRIVATE mm9)
+#    target_link_libraries(thextech PRIVATE nds9)
+#    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__16M__)
+#    set(CMAKE_EXE_LINKER_FLAGS "-L${NDS_ROOT}/lib -specs=dsi_arm9.specs")
+#elseif(PGE_MIN_PORT)
+#    target_compile_definitions(thextech PRIVATE -DLOW_MEM)
+#endif()
 
-if(VITA)
-    # Link Vita specific libraries to the generic interface.
-    target_link_libraries(A2XT_Int INTERFACE ${VITA_ADDTL_LIBS})
-
-    # Set explicit flags for this project
-    target_compile_definitions(thextech PRIVATE
-        -DVITA -DNO_SCREENSHOT -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -DNO_INTPTROC)
-endif()
-
-if(WIN32 AND WINDOWS_STORE)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_WINRT)
-endif()
-
-if(NINTENDO_3DS)
-    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX -DPGE_NO_THREADING -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__3DS__)
-elseif(NINTENDO_WII)
-    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__WII__)
-elseif(NINTENDO_WIIU)
-    target_compile_definitions(thextech PRIVATE -DPGE_SDL_MUTEX)
-elseif(NINTENDO_DS)
-    target_link_libraries(thextech PRIVATE filesystem)
-    target_link_libraries(thextech PRIVATE fat)
-    target_link_libraries(thextech PRIVATE mm9)
-    target_link_libraries(thextech PRIVATE nds9)
-    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DLOW_MEM -DTHEXTECH_PRELOAD_LEVELS -D__16M__)
-    set(CMAKE_EXE_LINKER_FLAGS "-L${NDS_ROOT}/lib -specs=dsi_arm9.specs")
-elseif(PGE_MIN_PORT)
-    target_compile_definitions(thextech PRIVATE -DLOW_MEM)
-endif()
-
-if(NINTENDO_DS OR NINTENDO_3DS OR NINTENDO_WII OR NINTENDO_SWITCH OR ANDROID OR EMSCRIPTEN)
-    # Disable language tools at non-desktop platforms
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_DISABLE_LANG_TOOLS)
-endif()
+#if(NINTENDO_DS OR NINTENDO_3DS OR NINTENDO_WII OR NINTENDO_SWITCH OR ANDROID OR EMSCRIPTEN)
+#    # Disable language tools at non-desktop platforms
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_DISABLE_LANG_TOOLS)
+#endif()
 
 if((UNIX OR NINTENDO_SWITCH OR ANDROID OR APPLE) AND NOT EMSCRIPTEN)
     # Allow hotswapping renderer on fully tested platforms
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_RESTART_RENDERER_SUPPORTED)
 endif()
 
-if(THEXTECH_NO_SDL_BUILD)
-    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DTHEXTECH_NO_SDL_BUILD)
-endif()
-
-if(THEXTECH_CLI_BUILD)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_CLI_BUILD)
-endif()
+#if(THEXTECH_NO_SDL_BUILD)
+#    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DTHEXTECH_NO_SDL_BUILD)
+#endif()
+#
+#if(THEXTECH_CLI_BUILD)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_CLI_BUILD)
+#endif()
 
 if(THEXTECH_BUILD_GL_DESKTOP_MODERN)
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_DESKTOP_MODERN)
 endif()
 
-if(THEXTECH_BUILD_GL_ES_MODERN)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_ES_MODERN)
-endif()
+#if(THEXTECH_BUILD_GL_ES_MODERN)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_ES_MODERN)
+#endif()
 
 if(THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_ES_MODERN)
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_MODERN)
@@ -721,105 +721,105 @@ if(THEXTECH_BUILD_GL_DESKTOP_LEGACY)
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_DESKTOP_LEGACY)
 endif()
 
-if(THEXTECH_BUILD_GL_ES_LEGACY)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_ES_LEGACY)
-endif()
+#if(THEXTECH_BUILD_GL_ES_LEGACY)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BUILD_GL_ES_LEGACY)
+#endif()
+#
+#if(THEXTECH_ENABLE_NEW_USER_PATHS)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_NEW_USER_PATHS)
+#endif()
 
-if(THEXTECH_ENABLE_NEW_USER_PATHS)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_NEW_USER_PATHS)
-endif()
+#if(THEXTECH_ENABLE_WIP_FEATURES)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_WIP_FEATURES)
+#endif()
+#
+#if(THEXTECH_FIXED_ASSETS_PATH AND NOT THEXTECH_FIXED_ASSETS_PATH STREQUAL "")
+#    target_compile_definitions(thextech PRIVATE -DFIXED_ASSETS_PATH="${THEXTECH_FIXED_ASSETS_PATH}")
+#endif()
 
-if(THEXTECH_ENABLE_WIP_FEATURES)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_WIP_FEATURES)
-endif()
+#if(THEXTECH_USER_DIR_NAME AND NOT THEXTECH_USER_DIR_NAME STREQUAL "")
+#    target_compile_definitions(thextech PRIVATE -DUSER_DIR_NAME="${THEXTECH_USER_DIR_NAME}")
+#endif()
+#
+#if(THEXTECH_GAME_NAME_TITLE AND NOT THEXTECH_GAME_NAME_TITLE STREQUAL "")
+#    target_compile_definitions(thextech PRIVATE -DCUSTOM_GAME_NAME_TITLE="${THEXTECH_GAME_NAME_TITLE}")
+#endif()
+#
+#if(THEXTECH_CREDITS_URL AND NOT THEXTECH_CREDITS_URL STREQUAL "")
+#    target_compile_definitions(thextech PRIVATE -DCUSTOM_CREDITS_URL="${THEXTECH_CREDITS_URL}")
+#endif()
 
-if(THEXTECH_FIXED_ASSETS_PATH AND NOT THEXTECH_FIXED_ASSETS_PATH STREQUAL "")
-    target_compile_definitions(thextech PRIVATE -DFIXED_ASSETS_PATH="${THEXTECH_FIXED_ASSETS_PATH}")
-endif()
+#if(THEXTECH_CREDITS_TITLE AND NOT THEXTECH_CREDITS_TITLE STREQUAL "")
+#    target_compile_definitions(thextech PRIVATE -DCUSTOM_CREDITS_TITLE="${THEXTECH_CREDITS_TITLE}")
+#endif()
+#
+#if(THEXTECH_ENABLE_LUA)
+#    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_LUA)
+#endif()
+#
+#if(THEXTECH_ENABLE_INTEGRATOR)
+#    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_INTEGRATOR)
+#endif()
+#
+#if(THEXTECH_ENABLE_DISCORD_RPC)
+#    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_DISCORD_RPC -DXTECH_DISCORD_APPID=${THEXTECH_DISCORD_APPID})
+#endif()
 
-if(THEXTECH_USER_DIR_NAME AND NOT THEXTECH_USER_DIR_NAME STREQUAL "")
-    target_compile_definitions(thextech PRIVATE -DUSER_DIR_NAME="${THEXTECH_USER_DIR_NAME}")
-endif()
-
-if(THEXTECH_GAME_NAME_TITLE AND NOT THEXTECH_GAME_NAME_TITLE STREQUAL "")
-    target_compile_definitions(thextech PRIVATE -DCUSTOM_GAME_NAME_TITLE="${THEXTECH_GAME_NAME_TITLE}")
-endif()
-
-if(THEXTECH_CREDITS_URL AND NOT THEXTECH_CREDITS_URL STREQUAL "")
-    target_compile_definitions(thextech PRIVATE -DCUSTOM_CREDITS_URL="${THEXTECH_CREDITS_URL}")
-endif()
-
-if(THEXTECH_CREDITS_TITLE AND NOT THEXTECH_CREDITS_TITLE STREQUAL "")
-    target_compile_definitions(thextech PRIVATE -DCUSTOM_CREDITS_TITLE="${THEXTECH_CREDITS_TITLE}")
-endif()
-
-if(THEXTECH_ENABLE_LUA)
-    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_LUA)
-endif()
-
-if(THEXTECH_ENABLE_INTEGRATOR)
-    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_INTEGRATOR)
-endif()
-
-if(THEXTECH_ENABLE_DISCORD_RPC)
-    target_compile_definitions(thextech PRIVATE -DENABLE_XTECH_DISCORD_RPC -DXTECH_DISCORD_APPID=${THEXTECH_DISCORD_APPID})
-endif()
-
-if(ENABLE_ADDRESS_SANITIZER)
-    target_compile_options(thextech PRIVATE -fsanitize=address)
-    target_link_options(thextech PRIVATE -fsanitize=address)
-endif()
+#if(ENABLE_ADDRESS_SANITIZER)
+#    target_compile_options(thextech PRIVATE -fsanitize=address)
+#    target_link_options(thextech PRIVATE -fsanitize=address)
+#endif()
 
 target_include_directories(thextech PRIVATE ${A2XT_INCS})
 target_link_libraries(thextech PRIVATE A2XT_Int)
 
-if(RANGE_ARR_USE_HEAP)
-    target_compile_definitions(thextech PRIVATE -DRANGE_ARR_USE_HEAP)
-endif()
-
-if(RANGE_ARR_UNSAFE_MODE)
-    target_compile_definitions(thextech PRIVATE -DRANGE_ARR_UNSAFE_MODE)
-endif()
-
-if(ENABLE_ANTICHEAT_TRAP)
-    target_compile_definitions(thextech PRIVATE -DENABLE_ANTICHEAT_TRAP)
-endif()
-
-if(ENABLE_OLD_CREDITS)
-    target_compile_definitions(thextech PRIVATE -DENABLE_OLD_CREDITS)
-    set_target_properties(thextech PROPERTIES OUTPUT_NAME "smbx")
-endif()
+#if(RANGE_ARR_USE_HEAP)
+#    target_compile_definitions(thextech PRIVATE -DRANGE_ARR_USE_HEAP)
+#endif()
+#
+#if(RANGE_ARR_UNSAFE_MODE)
+#    target_compile_definitions(thextech PRIVATE -DRANGE_ARR_UNSAFE_MODE)
+#endif()
+#
+#if(ENABLE_ANTICHEAT_TRAP)
+#    target_compile_definitions(thextech PRIVATE -DENABLE_ANTICHEAT_TRAP)
+#endif()
+#
+#if(ENABLE_OLD_CREDITS)
+#    target_compile_definitions(thextech PRIVATE -DENABLE_OLD_CREDITS)
+#    set_target_properties(thextech PROPERTIES OUTPUT_NAME "smbx")
+#endif()
 
 if(NOT ENABLE_LOGGING)
     target_compile_definitions(thextech PRIVATE -DDISABLE_LOGGING -DNO_FILE_LOGGING)
 endif()
 
-if(EMSCRIPTEN)
-    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DNO_FILE_LOGGING)
-endif()
+#if(EMSCRIPTEN)
+#    target_compile_definitions(thextech PRIVATE -DPGE_NO_THREADING -DNO_FILE_LOGGING)
+#endif()
+#
+#if(THEXTECH_NO_ARGV_HANDLING)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_NO_ARGV_HANDLING)
+#endif()
+#
+#if(THEXTECH_INTERPROC_SUPPORTED)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_INTERPROC_SUPPORTED)
+#endif()
+#
+#if(THEXTECH_FILEMAPPER_SUPPORTED)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_FILEMAPPER_SUPPORTED)
+#endif()
 
-if(THEXTECH_NO_ARGV_HANDLING)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_NO_ARGV_HANDLING)
-endif()
-
-if(THEXTECH_INTERPROC_SUPPORTED)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_INTERPROC_SUPPORTED)
-endif()
-
-if(THEXTECH_FILEMAPPER_SUPPORTED)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_FILEMAPPER_SUPPORTED)
-endif()
-
-if(THEXTECH_CRASHHANDLER_SUPPORTED)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_CRASHHANDLER_SUPPORTED)
-endif()
-
-# ======================= Render specific global macros ========================
-if(EMSCRIPTEN)
-    target_compile_definitions(thextech PRIVATE
-        -DNO_WINDOW_FOCUS_TRACKING  # Don't track for window focus
-    )
-endif()
+#if(THEXTECH_CRASHHANDLER_SUPPORTED)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_CRASHHANDLER_SUPPORTED)
+#endif()
+#
+## ======================= Render specific global macros ========================
+#if(EMSCRIPTEN)
+#    target_compile_definitions(thextech PRIVATE
+#        -DNO_WINDOW_FOCUS_TRACKING  # Don't track for window focus
+#    )
+#endif()
 
 if(NOT EMSCRIPTEN AND
    NOT NINTENDO_3DS AND
@@ -832,18 +832,18 @@ if(NOT EMSCRIPTEN AND
     )
 endif()
 
-if(ANDROID)
-    target_compile_definitions(thextech PRIVATE
-        -DUSE_RENDER_BLOCKING
-    )
-endif()
+#if(ANDROID)
+#    target_compile_definitions(thextech PRIVATE
+#        -DUSE_RENDER_BLOCKING
+#    )
+#endif()
 
-if(ANDROID OR VITA OR NINTENDO_3DS OR NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_SWITCH OR PGE_MIN_PORT OR THEXTECH_NO_SDL_BUILD)
-    target_compile_definitions(thextech PRIVATE
-        -DRENDER_FULLSCREEN_ALWAYS  # Game works always fullscreen
-        -DNO_WINDOW_FOCUS_TRACKING  # Don't track for window focus
-    )
-endif()
+#if(ANDROID OR VITA OR NINTENDO_3DS OR NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_SWITCH OR PGE_MIN_PORT OR THEXTECH_NO_SDL_BUILD)
+#    target_compile_definitions(thextech PRIVATE
+#        -DRENDER_FULLSCREEN_ALWAYS  # Game works always fullscreen
+#        -DNO_WINDOW_FOCUS_TRACKING  # Don't track for window focus
+#    )
+#endif()
 
 # ==============================================================================
 
@@ -851,9 +851,9 @@ if(NOT USE_SYSTEM_LIBS AND A2XT_DEPS)
     add_dependencies(thextech ${A2XT_DEPS})
 endif()
 
-if(THEXTECH_IS_BIG_ENDIAN)
-    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BIG_ENDIAN -DSOUND_FX_BIG_ENDIAN)
-endif()
+#if(THEXTECH_IS_BIG_ENDIAN)
+#    target_compile_definitions(thextech PRIVATE -DTHEXTECH_BIG_ENDIAN -DSOUND_FX_BIG_ENDIAN)
+#endif()
 
 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
     target_compile_definitions(thextech PRIVATE -DTHEXTECH_WORDSIZE=64)
@@ -863,17 +863,17 @@ else()
     message(WARNING "Unknown word size ${CMAKE_SIZEOF_VOID_P}!")
 endif()
 
-if(USE_STATIC_LIBC AND NOT USE_SYSTEM_LIBS)
-    if(NOT APPLE AND NOT MSVC)
-#        target_link_libraries(thextech PRIVATE -static)
-        set_property(TARGET thextech APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
-    endif()
-
-    if(MSVC)
-        target_compile_options(thextech PRIVATE /MT)
-        target_link_options(thextech PRIVATE /INCREMENTAL:NO /NODEFAULTLIB:MSVCRT)
-    endif()
-endif()
+#if(USE_STATIC_LIBC AND NOT USE_SYSTEM_LIBS)
+#    if(NOT APPLE AND NOT MSVC)
+##        target_link_libraries(thextech PRIVATE -static)
+#        set_property(TARGET thextech APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
+#    endif()
+#
+#    if(MSVC)
+#        target_compile_options(thextech PRIVATE /MT)
+#        target_link_options(thextech PRIVATE /INCREMENTAL:NO /NODEFAULTLIB:MSVCRT)
+#    endif()
+#endif()
 
 if (Backtrace_FOUND)
     set_property(TARGET thextech APPEND_STRING PROPERTY LINK_FLAGS " ${Backtrace_LIBRARIES}")
