@@ -505,24 +505,7 @@ endif()
 target_link_libraries(A2XT_Int INTERFACE ${A2XT_LIBS})
 target_include_directories(A2XT_Int INTERFACE ${A2XT_INCS})
 
-# Integrations with external applications
-if(THEXTECH_ENABLE_INTEGRATOR)
-    list(APPEND LIB_SRC
-        lib/Integrator/integrator.h
-        lib/Integrator/integrator.cpp)
 
-    if(THEXTECH_ENABLE_DISCORD_RPC)
-        list(APPEND LIB_SRC
-            lib/Integrator/int_discorcrpc.h
-            lib/Integrator/int_discorcrpc.cpp
-        )
-    endif()
-endif()
-
-if(NOT NINTENDO_3DS AND NOT NINTENDO_WII AND NOT NINTENDO_WIIU AND NOT NINTENDO_SWITCH AND NOT VITA AND NOT PGE_MIN_PORT)
-    list(APPEND LIB_SRC ${FILEMAPPER_SRCS})
-    set(THEXTECH_FILEMAPPER_SUPPORTED ON)
-endif()
 
 
 if(APPLE)
@@ -548,17 +531,6 @@ src/main.cpp)
 list(APPEND THEXTECH_SRC ${THEXTECH_HEADS_SRC})
 
 # ----------------------------------------------------
-
-if(THEXTECH_ENABLE_LUA)
-    add_subdirectory(script)
-    target_link_libraries(A2XT_Int INTERFACE XTechLua ${libLuaBind_Lib} ${libLuaJit_Lib})
-    if(UNIX)
-        find_library(LIB_DL_PATH dl)
-        if(LIB_DL_PATH)
-            target_link_libraries(A2XT_Int INTERFACE ${LIB_DL_PATH})
-        endif()
-    endif()
-endif()
 
 if(ANDROID)
     set(CMAKE_DEBUG_POSTFIX "")
