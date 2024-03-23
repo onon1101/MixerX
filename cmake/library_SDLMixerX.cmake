@@ -363,7 +363,7 @@ ExternalProject_Add(
 #    GIT_REPOSITORY https://github.com/WohlSoft/AudioCodecs.git
 #   UPDATE_COMMAND ""
     DOWNLOAD_COMMAND ""
-    SOURCE_DIR ${CMAKE_SOURCE_DIR}/3rdparty/AudioCodecs
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/AudioCodecs
     CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
@@ -401,7 +401,7 @@ if(NOT THEXTECH_NO_MIXER_X)
     #    GIT_REPOSITORY https://github.com/WohlSoft/SDL-Mixer-X.git
     #    UPDATE_COMMAND ""
         DOWNLOAD_COMMAND ""
-        SOURCE_DIR ${CMAKE_SOURCE_DIR}/3rdparty/SDL-Mixer-X
+        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/SDL-Mixer-X
         CMAKE_ARGS
             "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
             "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
