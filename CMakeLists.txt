@@ -117,13 +117,13 @@ include(version.cmake)
 include(cmake/git_version.cmake)
 
 
-configure_file(lib/CrashHandler/backtrace.h.in
-               generated-include/lib/CrashHandler/backtrace.h)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/generated-include)
+#configure_file(lib/CrashHandler/backtrace.h.in
+#               generated-include/lib/CrashHandler/backtrace.h)
+#include_directories(${CMAKE_CURRENT_BINARY_DIR}/generated-include)
 
-if(NINTENDO_SWITCH)
-    include_directories($ENV{DEVKITPRO}/portlibs/switch/include)
-endif()
+#if(NINTENDO_SWITCH)
+#    include_directories($ENV{DEVKITPRO}/portlibs/switch/include)
+#endif()
 
 #if(WIN32 OR EMSCRIPTEN OR HAIKU)
 #    set(USE_SYSTEM_LIBS_DEFAULT OFF)
@@ -353,21 +353,21 @@ if(USE_STATIC_LIBC)
     set(BUILD_SHARED_LIBS OFF)
 endif()
 
-include(lib/Allocator/pool-allocator.cmake)
+#include(lib/Allocator/pool-allocator.cmake)
 include(3rdparty/DirManager/dirman.cmake)
 
 if(NOT VITA AND NOT NINTENDO_SWITCH AND NOT NINTENDO_3DS AND NOT NINTENDO_WII AND NOT NINTENDO_WIIU AND NOT NINTENDO_DS)
     include(3rdparty/FileMapper/FileMapper.cmake)
 endif()
 
-include(lib/fmt/fmt.cmake)
+#include(lib/fmt/fmt.cmake)
 include(3rdparty/IniProcessor/IniProcessor.cmake)
-include(lib/Utils/Utils.cmake)
-include(lib/Logger/logger.cmake)
-include(lib/AppPath/app_path.cmake)
-include(lib/tclap/tclap.cmake)
-include(lib/md5/md5.cmake)
-include(lib/sdl_proxy/sdl_proxy.cmake)
+#include(lib/Utils/Utils.cmake)
+#include(lib/Logger/logger.cmake)
+#include(lib/AppPath/app_path.cmake)
+#include(lib/tclap/tclap.cmake)
+#include(lib/md5/md5.cmake)
+#include(lib/sdl_proxy/sdl_proxy.cmake)
 if(WIN32)
     include(lib/CrashHandler/StackWalker/StackWalker.cmake)
 endif()
@@ -559,52 +559,52 @@ endif()
 target_link_libraries(A2XT_Int INTERFACE ${A2XT_LIBS})
 target_include_directories(A2XT_Int INTERFACE ${A2XT_INCS})
 
-set(LIB_SRC
-    lib/util.cpp
-    lib/fader.cpp
-    lib/Graphics/image_size.cpp
-    lib/Graphics/size.cpp
-    ${APPPATH_SRCS}
-    ${DIRMANAGER_SRCS}
-    ${FMT_SRCS}
-    ${MD5_SRCS}
-    ${POOLALLOC_SRCS}
-    ${INIPROCESSOR_SRCS}
-    ${LOGGER_SRCS}
-    ${UTILS_SRCS}
-    ${LIB_SRC_EXTRA}
-    ${SDLPROXY_SRCS}
-)
+#set(LIB_SRC
+#    lib/util.cpp
+#    lib/fader.cpp
+#    lib/Graphics/image_size.cpp
+#    lib/Graphics/size.cpp
+#    ${APPPATH_SRCS}
+#    ${DIRMANAGER_SRCS}
+#    ${FMT_SRCS}
+#    ${MD5_SRCS}
+#    ${POOLALLOC_SRCS}
+#    ${INIPROCESSOR_SRCS}
+#    ${LOGGER_SRCS}
+#    ${UTILS_SRCS}
+#    ${LIB_SRC_EXTRA}
+#    ${SDLPROXY_SRCS}
+#)
 
-if(NOT THEXTECH_NO_SDL_BUILD)
-list(APPEND LIB_SRC
-    lib/Graphics/graphics_funcs.cpp
-    lib/Graphics/sizef.cpp
-    lib/Graphics/rect.cpp
-    lib/Graphics/rectf.cpp
-    lib/Graphics/point.cpp
-    lib/Graphics/pointf.cpp
-)
-endif()
+#if(NOT THEXTECH_NO_SDL_BUILD)
+#list(APPEND LIB_SRC
+#    lib/Graphics/graphics_funcs.cpp
+#    lib/Graphics/sizef.cpp
+#    lib/Graphics/rect.cpp
+#    lib/Graphics/rectf.cpp
+#    lib/Graphics/point.cpp
+#    lib/Graphics/pointf.cpp
+#)
+#endif()
 
-if(NOT ANDROID
-   AND NOT EMSCRIPTEN
-   AND NOT VITA
-   AND NOT NINTENDO_3DS
-   AND NOT NINTENDO_WII
-   AND NOT NINTENDO_WIIU
-   AND NOT NINTENDO_SWITCH
-   AND NOT THEXTECH_CLI_BUILD
-   AND NOT PGE_MIN_PORT)
-    list(APPEND LIB_SRC
-        lib/InterProcess/editor_pipe.h
-        lib/InterProcess/editor_pipe.cpp
-        lib/InterProcess/intproc.h
-        lib/InterProcess/intproc.cpp
-        src/capabilities.cpp
-    )
-    set(THEXTECH_INTERPROC_SUPPORTED ON)
-endif()
+#if(NOT ANDROID
+#   AND NOT EMSCRIPTEN
+#   AND NOT VITA
+#   AND NOT NINTENDO_3DS
+#   AND NOT NINTENDO_WII
+#   AND NOT NINTENDO_WIIU
+#   AND NOT NINTENDO_SWITCH
+#   AND NOT THEXTECH_CLI_BUILD
+#   AND NOT PGE_MIN_PORT)
+#    list(APPEND LIB_SRC
+#        lib/InterProcess/editor_pipe.h
+#        lib/InterProcess/editor_pipe.cpp
+#        lib/InterProcess/intproc.h
+#        lib/InterProcess/intproc.cpp
+#        src/capabilities.cpp
+#    )
+#    set(THEXTECH_INTERPROC_SUPPORTED ON)
+#endif()
 
 # Integrations with external applications
 if(THEXTECH_ENABLE_INTEGRATOR)
@@ -626,13 +626,13 @@ if(NOT NINTENDO_3DS AND NOT NINTENDO_WII AND NOT NINTENDO_WIIU AND NOT NINTENDO_
 endif()
 
 
-if(NINTENDO_3DS OR NINTENDO_WII OR NOT PGE_MIN_PORT)
-    list(APPEND LIB_SRC
-        ${STACK_WALKER_SRCS}
-        lib/CrashHandler/crash_handler.cpp
-    )
-    set(THEXTECH_CRASHHANDLER_SUPPORTED ON)
-endif()
+#if(NINTENDO_3DS OR NINTENDO_WII OR NOT PGE_MIN_PORT)
+#    list(APPEND LIB_SRC
+#        ${STACK_WALKER_SRCS}
+#        lib/CrashHandler/crash_handler.cpp
+#    )
+#    set(THEXTECH_CRASHHANDLER_SUPPORTED ON)
+#endif()
 
 
 if(APPLE)
@@ -656,282 +656,188 @@ if(APPLE)
 endif()
 
 set(THEXTECH_SRC
-    src/compat.cpp
-    src/game_main.cpp
-    src/globals.cpp
-    src/npc.cpp
-    src/sound.cpp
-    src/sound_spatial.cpp
-    src/frame_timer.cpp
-    src/global_dirs.cpp
-    src/global_strings.cpp
-    src/main/world_loop.cpp
-    src/main/world_file.cpp
-    src/main/game_info.cpp
-    src/main/game_loop.cpp
-    src/main/gameplay_timer.cpp
-    src/main/player_frames.cpp
-    src/main/setup_vars.cpp
-    src/main/setup_physics.cpp
-    src/main/speedrunner.cpp
-    src/main/record.cpp
-    src/main/game_save.cpp
-    src/main/level_save_info.cpp
-    src/main/level_medals.cpp
-    src/main/main_config.cpp
-    src/main/level_file.cpp
-    src/main/menu_loop.cpp
-    src/main/menu_main.cpp
-    src/main/screen_pause.cpp
-    src/main/screen_connect.cpp
-    src/main/screen_quickreconnect.cpp
-    src/main/screen_textentry.cpp
-    src/main/screen_prompt.cpp
-    src/main/screen_progress.cpp
-    src/main/hints.cpp
-    src/main/game_strings.cpp
-    src/main/translate.cpp
-    src/main/translate_episode.cpp
-    src/main/menu_controls.cpp
-    src/main/cheat_code.cpp
-    src/main/outro_loop.cpp
-    src/main/trees.cpp
-    src/main/block_table.cpp
-    src/main/asset_pack.cpp
-    src/main/screen_asset_pack.cpp
-    src/graphics/gfx_update2.cpp
-    src/graphics/gfx_update.cpp
-    src/graphics/gfx_background.cpp
-    src/graphics/gfx_print.cpp
-    src/graphics/gfx_message.cpp
-    src/graphics/gfx_editor.cpp
-    src/graphics/gfx_frame.cpp
-    src/graphics/gfx_camera.cpp
-    src/graphics/gfx_world.cpp
-    src/graphics/gfx_credits.cpp
-    src/graphics/gfx_hud.cpp
-    src/graphics/gfx_enter_screen.cpp
-    src/graphics/gfx_draw_player.cpp
-    src/graphics/gfx_special_frames.cpp
-    src/graphics/gfx_screen.cpp
-    src/graphics/gfx_keyhole.cpp
-    src/graphics/gfx_marquee.cpp
-    src/control/duplicate.cpp
-    src/control/controls.cpp
-    src/script/msg_preprocessor.cpp
-    src/logic/object_graph.cpp
-    src/change_res.cpp
-    src/effect.cpp
-    src/collision.cpp
-    src/load_gfx.cpp
-    src/layers.cpp
-    src/custom.cpp
-    src/graphics.cpp
-    src/main.cpp
-    src/blocks.cpp
-    src/gfx.cpp
-    src/frm_main.cpp
-    src/player.cpp
-    src/rand.cpp
-    src/sorting.cpp
-    src/screen.cpp
-    src/screen_fader.cpp
-    src/std_picture.cpp
-    src/npc/npc_hit.cpp
-    src/npc/npc_kill.cpp
-    src/npc/npc_update.cpp
-    src/npc/npc_frames.cpp
-    src/npc/npc_bonus.cpp
-    src/npc/npc_queues.cpp
-    src/npc/section_overlap.cpp
-    src/npc/npc_activation.cpp
-    src/player/player_update.cpp
-    src/fontman/font_manager.cpp
-    src/fontman/font_manager_private.cpp
-    src/fontman/raster_font.cpp
-    src/fontman/legacy_font.cpp
-    src/fontman/utf8_helpers.cpp
-)
+src/main.cpp)
 
-if(THEXTECH_ENABLE_TTF_SUPPORT)
-    add_definitions(-DTHEXTECH_ENABLE_TTF_SUPPORT)
-    list(APPEND THEXTECH_SRC
-        src/fontman/ttf_font.cpp
-    )
-endif()
+
+#if(THEXTECH_ENABLE_TTF_SUPPORT)
+#    add_definitions(-DTHEXTECH_ENABLE_TTF_SUPPORT)
+#    list(APPEND THEXTECH_SRC
+#        src/fontman/ttf_font.cpp
+#    )
+#endif()
 
 # Luna Autocode script engine
-list(APPEND THEXTECH_SRC
-    src/script/luna/lunaglobals.cpp
-    src/script/luna/lunacounter.cpp
-    src/script/luna/lunacounter_record.cpp
-)
+#list(APPEND THEXTECH_SRC
+#    src/script/luna/lunaglobals.cpp
+#    src/script/luna/lunacounter.cpp
+#    src/script/luna/lunacounter_record.cpp
+#)
 
-if(THEXTECH_ENABLE_LUNA_AUTOCODE)
-    add_definitions(-DTHEXTECH_ENABLE_LUNA_AUTOCODE)
-    list(APPEND THEXTECH_SRC
-        src/script/luna/luna.cpp
-        src/script/luna/autocode.cpp
-        src/script/luna/autocode_manager.cpp
-        src/script/luna/csprite.cpp
-        src/script/luna/lunaspriteman.cpp
-        src/script/luna/hitbox.cpp
-        src/script/luna/lunaimgbox.cpp
-        src/script/luna/sprite_component.cpp
-        src/script/luna/sprite_funcs.cpp
-        src/script/luna/lunalevels.cpp
-        src/script/luna/lunaplayer.cpp
-        src/script/luna/lunanpc.cpp
-        src/script/luna/lunablock.cpp
-        src/script/luna/lunalayer.cpp
-        src/script/luna/lunamisc.cpp
-        src/script/luna/lunalevel.cpp
-        src/script/luna/lunarender.cpp
-        src/script/luna/lunacell.cpp
-        src/script/luna/lunainput.cpp
-        src/script/luna/lunavarbank.cpp
-        src/script/luna/renderop_bitmap.cpp
-        src/script/luna/renderop_rect.cpp
-        src/script/luna/renderop_effect.cpp
-        src/script/luna/renderop_string.cpp
-        src/script/luna/mememu.cpp
-        src/script/luna/levels/Docopoper-AbstractAssault.cpp
-        src/script/luna/levels/Docopoper-Calleoca.cpp
-        src/script/luna/levels/Docopoper-TheFloorisLava.cpp
-        src/script/luna/levels/SAJewers-QraestoliaCaverns.cpp
-        src/script/luna/levels/SAJewers-Snowboardin.cpp
-        src/script/luna/levels/Talkhaus-Science_Final_Battle.cpp
-        src/script/luna/levels/KilArmoryCode.cpp
-    )
-endif()
+#if(THEXTECH_ENABLE_LUNA_AUTOCODE)
+#    add_definitions(-DTHEXTECH_ENABLE_LUNA_AUTOCODE)
+#    list(APPEND THEXTECH_SRC
+#        src/script/luna/luna.cpp
+#        src/script/luna/autocode.cpp
+#        src/script/luna/autocode_manager.cpp
+#        src/script/luna/csprite.cpp
+#        src/script/luna/lunaspriteman.cpp
+#        src/script/luna/hitbox.cpp
+#        src/script/luna/lunaimgbox.cpp
+#        src/script/luna/sprite_component.cpp
+#        src/script/luna/sprite_funcs.cpp
+#        src/script/luna/lunalevels.cpp
+#        src/script/luna/lunaplayer.cpp
+#        src/script/luna/lunanpc.cpp
+#        src/script/luna/lunablock.cpp
+#        src/script/luna/lunalayer.cpp
+#        src/script/luna/lunamisc.cpp
+#        src/script/luna/lunalevel.cpp
+#        src/script/luna/lunarender.cpp
+#        src/script/luna/lunacell.cpp
+#        src/script/luna/lunainput.cpp
+#        src/script/luna/lunavarbank.cpp
+#        src/script/luna/renderop_bitmap.cpp
+#        src/script/luna/renderop_rect.cpp
+#        src/script/luna/renderop_effect.cpp
+#        src/script/luna/renderop_string.cpp
+#        src/script/luna/mememu.cpp
+#        src/script/luna/levels/Docopoper-AbstractAssault.cpp
+#        src/script/luna/levels/Docopoper-Calleoca.cpp
+#        src/script/luna/levels/Docopoper-TheFloorisLava.cpp
+#        src/script/luna/levels/SAJewers-QraestoliaCaverns.cpp
+#        src/script/luna/levels/SAJewers-Snowboardin.cpp
+#        src/script/luna/levels/Talkhaus-Science_Final_Battle.cpp
+#        src/script/luna/levels/KilArmoryCode.cpp
+#    )
+#endif()
 
-if(THEXTECH_ENABLE_AUDIO_FX)
-    add_definitions(-DTHEXTECH_ENABLE_AUDIO_FX)
-    list(APPEND THEXTECH_SRC
-        src/sound/fx/spc_echo.cpp
-        src/sound/fx/reverb.cpp
-    )
-endif()
+#if(THEXTECH_ENABLE_AUDIO_FX)
+#    add_definitions(-DTHEXTECH_ENABLE_AUDIO_FX)
+#    list(APPEND THEXTECH_SRC
+#        src/sound/fx/spc_echo.cpp
+#        src/sound/fx/reverb.cpp
+#    )
+#endif()
 
-if(THEXTECH_ENABLE_EDITOR)
-    add_definitions(-DTHEXTECH_ENABLE_EDITOR)
-    list(APPEND THEXTECH_SRC
-        src/editor/editor.cpp
-        src/editor/new_editor.cpp
-        src/editor/write_common.cpp
-        src/editor/write_level.cpp
-        src/editor/write_world.cpp
-        src/editor/editor_custom.cpp
-        src/editor/editor_strings.cpp
-        src/editor/magic_block.cpp
-    )
-endif()
+#if(THEXTECH_ENABLE_EDITOR)
+#    add_definitions(-DTHEXTECH_ENABLE_EDITOR)
+#    list(APPEND THEXTECH_SRC
+#        src/editor/editor.cpp
+#        src/editor/new_editor.cpp
+#        src/editor/write_common.cpp
+#        src/editor/write_level.cpp
+#        src/editor/write_world.cpp
+#        src/editor/editor_custom.cpp
+#        src/editor/editor_strings.cpp
+#        src/editor/magic_block.cpp
+#    )
+#endif()
 
-if(NINTENDO_3DS)
-    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM)
-    list(APPEND THEXTECH_SRC
-        src/control/input_3ds.cpp
-        src/core/minport/render_minport_shared.cpp
-        src/core/3ds/render_3ds.cpp
-        src/core/3ds/window_3ds.cpp
-        src/core/3ds/msgbox_3ds.cpp
-        src/core/3ds/events_3ds.cpp
-#        src/core/3ds/3ds-audio-lib.cpp
-        src/core/sdl/sdl_core.cpp
-        src/core/power/power_3ds.cpp
-    )
-elseif(NINTENDO_WII)
-    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM)
-    list(APPEND THEXTECH_SRC
-        src/control/input_wii.cpp
-        src/core/minport/render_minport_shared.cpp
-        src/core/wii/render_wii.cpp
-        src/core/wii/window_wii.cpp
-        src/core/wii/msgbox_wii.cpp
-        src/core/wii/events_wii.cpp
-        src/core/sdl/sdl_core.cpp
-        src/core/power/power_wii.cpp
-    )
-elseif(NINTENDO_DS)
-    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM -DTHEXTECH_NO_SDL_CORE)
-    list(REMOVE_ITEM THEXTECH_SRC src/sound.cpp)
+#if(NINTENDO_3DS)
+#    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM)
+#    list(APPEND THEXTECH_SRC
+#        src/control/input_3ds.cpp
+#        src/core/minport/render_minport_shared.cpp
+#        src/core/3ds/render_3ds.cpp
+#        src/core/3ds/window_3ds.cpp
+#        src/core/3ds/msgbox_3ds.cpp
+#        src/core/3ds/events_3ds.cpp
+##        src/core/3ds/3ds-audio-lib.cpp
+#        src/core/sdl/sdl_core.cpp
+#        src/core/power/power_3ds.cpp
+#    )
+#elseif(NINTENDO_WII)
+#    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM)
+#    list(APPEND THEXTECH_SRC
+#        src/control/input_wii.cpp
+#        src/core/minport/render_minport_shared.cpp
+#        src/core/wii/render_wii.cpp
+#        src/core/wii/window_wii.cpp
+#        src/core/wii/msgbox_wii.cpp
+#        src/core/wii/events_wii.cpp
+#        src/core/sdl/sdl_core.cpp
+#        src/core/power/power_wii.cpp
+#    )
+#elseif(NINTENDO_DS)
+#    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM -DTHEXTECH_NO_SDL_CORE)
+#    list(REMOVE_ITEM THEXTECH_SRC src/sound.cpp)
+#
+#    list(APPEND THEXTECH_SRC
+#        src/control/input_16m.cpp
+#        src/core/minport/render_minport_shared.cpp
+#        src/core/16m/render_16m.cpp
+#        src/core/16m/msgbox_16m.cpp
+#        src/core/16m/window_16m.cpp
+#        src/core/null/events_null.cpp
+#        src/core/16m/sound_16m.cpp
+#        src/core/power/power_null.cpp
+#    )
+#elseif(THEXTECH_NO_SDL_BUILD)
+#    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM -DTHEXTECH_NO_SDL_CORE)
+#    list(APPEND THEXTECH_SRC
+#        src/core/null/render_null.cpp
+#        src/core/null/window_null.cpp
+#        src/core/null/msgbox_null.cpp
+#        src/core/null/events_null.cpp
+#        src/core/power/power_null.cpp
+#    )
+#elseif(THEXTECH_CLI_BUILD)
+#    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM)
+#    list(APPEND THEXTECH_SRC
+#        src/core/null/render_null.cpp
+#        src/core/null/window_null.cpp
+#        src/core/null/msgbox_null.cpp
+#        src/core/null/events_null.cpp
+#        src/core/sdl/sdl_core.cpp
+#        src/core/power/power_null.cpp
+#    )
+#else()
+#    add_definitions(-DCORE_EVERYTHING_SDL)
+#    list(APPEND THEXTECH_SRC
+#        src/control/joystick.cpp
+#        src/control/keyboard.cpp
+#        src/control/touchscreen.cpp
+#        src/core/base/render_base.cpp
+#        src/core/base/window_base.cpp
+#        src/core/base/msgbox_base.cpp
+#        src/core/base/events_base.cpp
+#        src/core/sdl/render_sdl.cpp
+#        src/core/sdl/window_sdl.cpp
+#        src/core/sdl/msgbox_sdl.cpp
+#        src/core/sdl/events_sdl.cpp
+#        src/core/sdl/sdl_core.cpp
+#        src/core/power/power_sdl.cpp
+#    )
+#
+#    if(THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_DESKTOP_LEGACY OR THEXTECH_BUILD_GL_ES_MODERN OR THEXTECH_BUILD_GL_ES_LEGACY)
+#        list(APPEND THEXTECH_SRC
+#            src/core/opengl/gl_program_object.cpp
+#            src/core/opengl/render_gl_frontend.cpp
+#            src/core/opengl/render_gl_backend.cpp
+#            src/core/opengl/render_gl_init.cpp
+#            src/core/opengl/render_gl_shaders.cpp
+#            src/core/opengl/render_gl_shader_lighting.cpp
+#        )
+#    endif()
+#
+#    if(THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_ES_MODERN)
+#        list(APPEND THEXTECH_SRC
+#            src/core/opengl/gl_program_bank.cpp
+#            src/core/opengl/gl_particle_system.cpp
+#        )
+#    endif()
+#
+#    if(THEXTECH_BUILD_GL_DESKTOP_MODERN AND THEXTECH_USE_ANGLE_TRANSLATOR)
+#        add_definitions(-DTHEXTECH_USE_ANGLE_TRANSLATOR)
+#        list(APPEND THEXTECH_SRC
+#            src/core/opengl/gl_shader_translator.cpp
+#        )
+#    endif()
+#
+#endif()
 
-    list(APPEND THEXTECH_SRC
-        src/control/input_16m.cpp
-        src/core/minport/render_minport_shared.cpp
-        src/core/16m/render_16m.cpp
-        src/core/16m/msgbox_16m.cpp
-        src/core/16m/window_16m.cpp
-        src/core/null/events_null.cpp
-        src/core/16m/sound_16m.cpp
-        src/core/power/power_null.cpp
-    )
-elseif(THEXTECH_NO_SDL_BUILD)
-    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM -DTHEXTECH_NO_SDL_CORE)
-    list(APPEND THEXTECH_SRC
-        src/core/null/render_null.cpp
-        src/core/null/window_null.cpp
-        src/core/null/msgbox_null.cpp
-        src/core/null/events_null.cpp
-        src/core/power/power_null.cpp
-    )
-elseif(THEXTECH_CLI_BUILD)
-    add_definitions(-DWINDOW_CUSTOM -DMSGBOX_CUSTOM -DEVENTS_CUSTOM -DRENDER_CUSTOM)
-    list(APPEND THEXTECH_SRC
-        src/core/null/render_null.cpp
-        src/core/null/window_null.cpp
-        src/core/null/msgbox_null.cpp
-        src/core/null/events_null.cpp
-        src/core/sdl/sdl_core.cpp
-        src/core/power/power_null.cpp
-    )
-else()
-    add_definitions(-DCORE_EVERYTHING_SDL)
-    list(APPEND THEXTECH_SRC
-        src/control/joystick.cpp
-        src/control/keyboard.cpp
-        src/control/touchscreen.cpp
-        src/core/base/render_base.cpp
-        src/core/base/window_base.cpp
-        src/core/base/msgbox_base.cpp
-        src/core/base/events_base.cpp
-        src/core/sdl/render_sdl.cpp
-        src/core/sdl/window_sdl.cpp
-        src/core/sdl/msgbox_sdl.cpp
-        src/core/sdl/events_sdl.cpp
-        src/core/sdl/sdl_core.cpp
-        src/core/power/power_sdl.cpp
-    )
 
-    if(THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_DESKTOP_LEGACY OR THEXTECH_BUILD_GL_ES_MODERN OR THEXTECH_BUILD_GL_ES_LEGACY)
-        list(APPEND THEXTECH_SRC
-            src/core/opengl/gl_program_object.cpp
-            src/core/opengl/render_gl_frontend.cpp
-            src/core/opengl/render_gl_backend.cpp
-            src/core/opengl/render_gl_init.cpp
-            src/core/opengl/render_gl_shaders.cpp
-            src/core/opengl/render_gl_shader_lighting.cpp
-        )
-    endif()
-
-    if(THEXTECH_BUILD_GL_DESKTOP_MODERN OR THEXTECH_BUILD_GL_ES_MODERN)
-        list(APPEND THEXTECH_SRC
-            src/core/opengl/gl_program_bank.cpp
-            src/core/opengl/gl_particle_system.cpp
-        )
-    endif()
-
-    if(THEXTECH_BUILD_GL_DESKTOP_MODERN AND THEXTECH_USE_ANGLE_TRANSLATOR)
-        add_definitions(-DTHEXTECH_USE_ANGLE_TRANSLATOR)
-        list(APPEND THEXTECH_SRC
-            src/core/opengl/gl_shader_translator.cpp
-        )
-    endif()
-
-endif()
-
-
-list(APPEND THEXTECH_SRC src/core/language/language_common.cpp)
+#list(APPEND THEXTECH_SRC src/core/language/language_common.cpp)
 
 # Notes:
 # - First, algorithm will try to detect language using SDL's method if available (Supported by SDL 2.0.14 and newer)
@@ -939,74 +845,74 @@ list(APPEND THEXTECH_SRC src/core/language/language_common.cpp)
 # If there is a necessary to disable use of SDL-based language detection,
 # define the macro `THEXTECH_DISABLE_SDL_LOCALE` which will completely disable the SDL-based language detector
 
-if(THEXTECH_NO_SDL_BUILD)
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
-endif()
-
-if(WIN32)
-    list(APPEND THEXTECH_SRC src/core/language/language_win32.cpp)
-elseif(APPLE)
-    list(APPEND THEXTECH_SRC src/core/language/language_apple.cpp)
-elseif(ANDROID)
-    list(APPEND THEXTECH_SRC src/core/language/language_android.cpp)
-elseif(NINTENDO_DS)
-    # FIXME: Implement the Nintendo DS language initializer
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
-    list(APPEND THEXTECH_SRC src/core/language/language_dummy.cpp)
-elseif(NINTENDO_3DS)
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for 3DS doesn't support language detection
-    list(APPEND THEXTECH_SRC src/core/language/language_3ds.cpp)
-elseif(NINTENDO_WII)
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for Wii doesn't support language detection
-    list(APPEND THEXTECH_SRC src/core/language/language_wii.cpp)
-elseif(NINTENDO_WIIU)
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for WiiU doesn't support language detection
-    list(APPEND THEXTECH_SRC src/core/language/language_wiiu.cpp)
-elseif(NINTENDO_SWITCH)
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for Switch doesn't support language detection
-    list(APPEND THEXTECH_SRC src/core/language/language_switch.cpp)
-elseif(VITA)
-    # FIXME: Implement the PS Vita language initializer
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
-    list(APPEND THEXTECH_SRC src/core/language/language_dummy.cpp)
-elseif(UNIX)
-    list(APPEND THEXTECH_SRC src/core/language/language_unix.cpp)
-else()
-    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
-    list(APPEND THEXTECH_SRC src/core/language/language_dummy.cpp)
-endif()
+#if(THEXTECH_NO_SDL_BUILD)
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
+#endif()
+#
+#if(WIN32)
+#    list(APPEND THEXTECH_SRC src/core/language/language_win32.cpp)
+#elseif(APPLE)
+#    list(APPEND THEXTECH_SRC src/core/language/language_apple.cpp)
+#elseif(ANDROID)
+#    list(APPEND THEXTECH_SRC src/core/language/language_android.cpp)
+#elseif(NINTENDO_DS)
+#    # FIXME: Implement the Nintendo DS language initializer
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
+#    list(APPEND THEXTECH_SRC src/core/language/language_dummy.cpp)
+#elseif(NINTENDO_3DS)
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for 3DS doesn't support language detection
+#    list(APPEND THEXTECH_SRC src/core/language/language_3ds.cpp)
+#elseif(NINTENDO_WII)
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for Wii doesn't support language detection
+#    list(APPEND THEXTECH_SRC src/core/language/language_wii.cpp)
+#elseif(NINTENDO_WIIU)
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for WiiU doesn't support language detection
+#    list(APPEND THEXTECH_SRC src/core/language/language_wiiu.cpp)
+#elseif(NINTENDO_SWITCH)
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE) # SDL for Switch doesn't support language detection
+#    list(APPEND THEXTECH_SRC src/core/language/language_switch.cpp)
+#elseif(VITA)
+#    # FIXME: Implement the PS Vita language initializer
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
+#    list(APPEND THEXTECH_SRC src/core/language/language_dummy.cpp)
+#elseif(UNIX)
+#    list(APPEND THEXTECH_SRC src/core/language/language_unix.cpp)
+#else()
+#    add_definitions(-DTHEXTECH_DISABLE_SDL_LOCALE)
+#    list(APPEND THEXTECH_SRC src/core/language/language_dummy.cpp)
+#endif()
 
 
 # Add heads into the list
-file(GLOB THEXTECH_HEADS_SRC
-    *.h
-    lib/*.h
-    lib/AppPath/*.h
-    lib/CrashHandler/*.h
-    lib/Graphics/*.h
-    lib/tclap/*.h
-    lib/fmt/*.h
-    lib/json/*.hpp
-    src/*.h
-    src/*.hpp
-    src/script/*.h
-    src/script/luna/*.h
-    src/script/luna/level/*.h
-    src/control/*.h
-    src/core/*.h
-    src/core/base/*.h
-    src/core/sdl/*.h
-    src/core/language/*.h
-    src/editor/*.h
-    src/main/*.h
-    src/main/translate/*.h
-    src/main/*.hpp
-    src/npc/*.h
-    src/npc/*.hpp
-    src/sound/fx/*.h
-    src/sound/fx/*.hpp
-    src/fontman/*.h
-)
+#file(GLOB THEXTECH_HEADS_SRC
+#    *.h
+#    lib/*.h
+#    lib/AppPath/*.h
+#    lib/CrashHandler/*.h
+#    lib/Graphics/*.h
+#    lib/tclap/*.h
+#    lib/fmt/*.h
+#    lib/json/*.hpp
+#    src/*.h
+#    src/*.hpp
+#    src/script/*.h
+#    src/script/luna/*.h
+#    src/script/luna/level/*.h
+#    src/control/*.h
+#    src/core/*.h
+#    src/core/base/*.h
+#    src/core/sdl/*.h
+#    src/core/language/*.h
+#    src/editor/*.h
+#    src/main/*.h
+#    src/main/translate/*.h
+#    src/main/*.hpp
+#    src/npc/*.h
+#    src/npc/*.hpp
+#    src/sound/fx/*.h
+#    src/sound/fx/*.hpp
+#    src/fontman/*.h
+#)
 list(APPEND THEXTECH_SRC ${THEXTECH_HEADS_SRC})
 
 # ----------------------------------------------------
