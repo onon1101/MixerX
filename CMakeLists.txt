@@ -46,11 +46,11 @@ endif()
 
 if(APPLE)
     if(CMAKE_HOST_SYSTEM_VERSION VERSION_LESS 9)
-        set(XTECH_PLIST_NAME "thextech.plist.tiger.in")
-        set(XTECH_DEFAULT_ICNS "resources/tiger/thextech.icns")
+#        set(XTECH_PLIST_NAME "thextech.plist.tiger.in")
+#        set(XTECH_DEFAULT_ICNS "resources/tiger/thextech.icns")
     else()
-        set(XTECH_PLIST_NAME "thextech.plist.in")
-        set(XTECH_DEFAULT_ICNS "resources/thextech.icns")
+#        set(XTECH_PLIST_NAME "thextech.plist.in")
+#        set(XTECH_DEFAULT_ICNS "resources/thextech.icns")
     endif()
 
     if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET OR CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL "")
@@ -426,7 +426,7 @@ if(EMSCRIPTEN)
 #    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --embed-file \"${_LANGAUGES_TEMP_FOLDER}\"@\"languages/\"")
 #    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_CONFIG_PACK}\"@\"configs/${PGE_PRELOAD_CONFIG_PACK_NAME}/\"")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_ENVIRONMENT}\"@\"/\"")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --shell-file '${CMAKE_CURRENT_SOURCE_DIR}/resources/emscripten/shell_minimal.html'")
+#    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --shell-file '${CMAKE_CURRENT_SOURCE_DIR}/resources/emscripten/shell_minimal.html'")
     # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --use-preload-cache")
     # set(LINK_FLAGS "${LINK_FLAGS} -DIS_LINK -s USE_PTHREADS=1 -s FORCE_FILESYSTEM=1 --embed-file '${CMAKE_CURRENT_SOURCE_DIR}/@languages'")
 endif()
@@ -589,16 +589,16 @@ endif()
 
 
 if(APPLE)
-    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/resources/file_icons/*.icns")
+#    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/resources/file_icons/*.icns")
     list(APPEND LIB_SRC
         ${XTECH_DEFAULT_ICNS}
         ${PGE_FILE_ICONS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/PkgInfo
+#        ${CMAKE_CURRENT_SOURCE_DIR}/resources/PkgInfo
     )
 
     if(XTECH_MACOSX_TIGER)
         set(THEXTECH_MAC_EXEX_GENERATED "${CMAKE_BINARY_DIR}/generated/TheXTechRun")
-        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/resources/tiger/TheXTechRun.in" "${THEXTECH_MAC_EXEX_GENERATED}_tmp/TheXTechRun")
+#        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/resources/tiger/TheXTechRun.in" "${THEXTECH_MAC_EXEX_GENERATED}_tmp/TheXTechRun")
         file(COPY
             "${THEXTECH_MAC_EXEX_GENERATED}_tmp/TheXTechRun"
             DESTINATION "${CMAKE_BINARY_DIR}/generated/"
@@ -616,7 +616,7 @@ list(APPEND THEXTECH_SRC ${THEXTECH_HEADS_SRC})
 # ----------------------------------------------------
 
 if(WIN32 AND NOT EMSCRIPTEN)
-    list(APPEND THEXTECH_SRC resources/thextech.rc)
+#    list(APPEND THEXTECH_SRC resources/thextech.rc)
 endif()
 
 if(THEXTECH_ENABLE_LUA)
@@ -697,7 +697,7 @@ if(APPLE)
     set_target_properties(thextech PROPERTIES
         OUTPUT_NAME "${THEXTECH_BUNDLE_NAME}"
         MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/resources/${XTECH_PLIST_NAME}"
+#        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/resources/${XTECH_PLIST_NAME}"
         MACOSX_BUNDLE_BUNDLE_NAME "${THEXTECH_BUNDLE_NAME}"
         MACOSX_BUNDLE_EXECUTABLE_NAME "${THEXTECH_EXECUTABLE_NAME_OUT}"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.thextech"
@@ -709,7 +709,7 @@ if(APPLE)
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/${XTECH_DEFAULT_ICNS}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/resources/PkgInfo PROPERTIES MACOSX_PACKAGE_LOCATION "")
+#    set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/resources/PkgInfo PROPERTIES MACOSX_PACKAGE_LOCATION "")
     if(XTECH_MACOSX_TIGER)
         set_source_files_properties("${THEXTECH_MAC_EXEX_GENERATED}" PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS")
     endif()
@@ -720,8 +720,8 @@ if(APPLE)
 
     if(THEXTECH_PRELOAD_ENVIRONMENT AND NOT THEXTECH_PRELOAD_ENVIRONMENT STREQUAL "")
         add_custom_command(TARGET thextech POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:thextech>/../Resources/assets"
-            COMMAND ${CMAKE_COMMAND} -E copy_directory "${THEXTECH_PRELOAD_ENVIRONMENT}" "$<TARGET_FILE_DIR:thextech>/../Resources/assets"
+#            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:thextech>/../Resources/assets"
+#            COMMAND ${CMAKE_COMMAND} -E copy_directory "${THEXTECH_PRELOAD_ENVIRONMENT}" "$<TARGET_FILE_DIR:thextech>/../Resources/assets"
             COMMENT "Copying assets into bundle..."
         )
         target_compile_definitions(thextech PRIVATE -DUSE_BUNDLED_ASSETS)
@@ -1060,28 +1060,28 @@ elseif(NINTENDO_3DS)
         NAME "TheXTech ${THEXTECH_VERSION_STRING}"
         DESCRIPTION "${SMDH_VERSION}"
         AUTHOR "Wohlstand and ds-sloth"
-        ICON "${CMAKE_SOURCE_DIR}/resources/icon/thextech_48.png"
+#        ICON "${CMAKE_SOURCE_DIR}/resources/icon/thextech_48.png"
     )
 
     ctr_create_3dsx(thextech SMDH "thextech.smdh")
 elseif(NINTENDO_WII)
     string(TIMESTAMP XTECH_WIIMETA_RELEASE_DATE "%Y%m%d")
-    configure_file(${CMAKE_SOURCE_DIR}/resources/wii/icon.png ${CMAKE_BINARY_DIR}/icon.png COPYONLY)
-    configure_file(${CMAKE_SOURCE_DIR}/resources/wii/meta.xml.in ${CMAKE_BINARY_DIR}/meta.xml)
+#    configure_file(${CMAKE_SOURCE_DIR}/resources/wii/icon.png ${CMAKE_BINARY_DIR}/icon.png COPYONLY)
+#    configure_file(${CMAKE_SOURCE_DIR}/resources/wii/meta.xml.in ${CMAKE_BINARY_DIR}/meta.xml)
     ogc_create_dol(thextech)
 elseif(NINTENDO_WIIU)
     string(TIMESTAMP XTECH_WIIMETA_RELEASE_DATE "%Y%m%d")
-    configure_file(${CMAKE_SOURCE_DIR}/resources/wiiu/icon.png ${CMAKE_BINARY_DIR}/icon.png COPYONLY)
-    configure_file(${CMAKE_SOURCE_DIR}/resources/wiiu/meta.xml.in ${CMAKE_BINARY_DIR}/meta.xml)
+#    configure_file(${CMAKE_SOURCE_DIR}/resources/wiiu/icon.png ${CMAKE_BINARY_DIR}/icon.png COPYONLY)
+#    configure_file(${CMAKE_SOURCE_DIR}/resources/wiiu/meta.xml.in ${CMAKE_BINARY_DIR}/meta.xml)
     wut_create_rpx(thextech)
     wut_create_wuhb(thextech
         CONTENT
         NAME "TheXTech v${THEXTECH_VERSION_STRING}"
         SHORTNAME "TheXTech"
         AUTHOR "Wohlstand and ds-sloth"
-        ICON "${CMAKE_SOURCE_DIR}/resources/switch/thextech-logo.png"
-        TVSPLASH "${CMAKE_SOURCE_DIR}/resources/wiiu/wuhb-splash.png"
-        DRCSPLASH "${CMAKE_SOURCE_DIR}/resources/wiiu/wuhb-splash.png"
+#        ICON "${CMAKE_SOURCE_DIR}/resources/switch/thextech-logo.png"
+#        TVSPLASH "${CMAKE_SOURCE_DIR}/resources/wiiu/wuhb-splash.png"
+#        DRCSPLASH "${CMAKE_SOURCE_DIR}/resources/wiiu/wuhb-splash.png"
     )
 elseif(NINTENDO_DS)
     if(NOT "${THEXTECH_VERSION_REL}" STREQUAL "")
@@ -1094,7 +1094,7 @@ elseif(NINTENDO_DS)
         NAME "TheXTech ${THEXTECH_VERSION_STRING}"
         SUBTITLE1 "Wohlstand and ds-sloth"
         SUBTITLE2 "${ROM_VERSION}"
-        ICON "${CMAKE_SOURCE_DIR}/resources/nds/icon.bmp"
+#        ICON "${CMAKE_SOURCE_DIR}/resources/nds/icon.bmp"
     )
 elseif(NINTENDO_SWITCH)
     include(cmake/package_switch.cmake)
@@ -1123,9 +1123,9 @@ elseif(EMSCRIPTEN)
                 "${PGE_PRELOAD_ENVIRONMENT}/graphics/ui/icon/thextech_256.png"
                 "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thextech_256.png")
 
-    configure_file(${CMAKE_SOURCE_DIR}/resources/emscripten/manifest.json.in ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/manifest.json)
+#    configure_file(${CMAKE_SOURCE_DIR}/resources/emscripten/manifest.json.in ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/manifest.json)
 
-    configure_file(${CMAKE_SOURCE_DIR}/resources/emscripten/sw.js.in ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sw.js)
+#    configure_file(${CMAKE_SOURCE_DIR}/resources/emscripten/sw.js.in ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sw.js)
 
 else()
     install(TARGETS thextech
@@ -1160,8 +1160,8 @@ else()
             if(FLATPAK_BUILD)
                 set(FLATPAK_DESCRIPTION "TheXTech is an open-source continuation of the SMBX 1.3 platformer game engine. Its highest priority is full compatibility with the SMBX 1.3 content standard, but it also adds a number of enhancements and bugfixes." CACHE STRING "Description for the installable flatpak package.")
 
-                configure_file("${CMAKE_CURRENT_SOURCE_DIR}/resources/flatpak/appdata.xml.in"
-                               "${DEPENDENCIES_INSTALL_DIR}/share/metainfo/${THEXTECH_EXECUTABLE_NAME}.metainfo.xml")
+#                configure_file("${CMAKE_CURRENT_SOURCE_DIR}/resources/flatpak/appdata.xml.in"
+#                               "${DEPENDENCIES_INSTALL_DIR}/share/metainfo/${THEXTECH_EXECUTABLE_NAME}.metainfo.xml")
                 install(FILES "${DEPENDENCIES_INSTALL_DIR}/share/metainfo/${THEXTECH_EXECUTABLE_NAME}.metainfo.xml"
                         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/metainfo)
             endif()
@@ -1170,7 +1170,7 @@ else()
             if(THEXTECH_SOURCE_ASSETS_PATH AND NOT THEXTECH_SOURCE_ASSETS_PATH STREQUAL "")
                 set(THEXTECH_ICON_PATH "${THEXTECH_SOURCE_ASSETS_PATH}/graphics/ui/icon/")
             else()
-                set(THEXTECH_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/icon/")
+#                set(THEXTECH_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/icon/")
             endif()
 
             install(FILES "${THEXTECH_ICON_PATH}/thextech_16.png"
