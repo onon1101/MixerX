@@ -4,6 +4,8 @@ if(POLICY CMP0069) # Allow CMAKE_INTERPROCEDURAL_OPTIMIZATION (lto) to be set
     cmake_policy(SET CMP0069 NEW)
 endif()
 
+set(CMAKE_INSTALL_MESSAGE LAZY)
+
 project(TheXTech LANGUAGES C CXX)
 
 include(CheckCCompilerFlag)
@@ -262,6 +264,14 @@ file(GLOB_RECURSE SRC_FILES src/*)
 file(GLOB_RECURSE HEADER_FILES include/*)
 list(APPEND A2XT_INCS HEADER_FILES)
 
+#set(BUILD_SHARED_LIBS FALSE)
+#
+#set(SDL2IMAGE_INSTALL OFF)
+#set(SDL2IMAGE_VENDORED ON)
+#
+#set(SDL2TTF_INSTALL OFF)
+#set(SDL2TTF_VENDORED ON)
+
 include(FetchContent)
 include(cmake/Library_GL.cmake)
 include(cmake/Library_GLM.cmake)
@@ -279,6 +289,8 @@ list(APPEND A2XT_INCS ${SDL2_INCLUDE_DIRS} ${MixerX_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/include ${GLEW_INCLUDE_DIR}
         ${GLM_INCLUDE_DIR} ${Spdlog_INCLUDE_DIR})
 
+set(SDL2MIXERX_INSTALL OFF)
+set(SDL2MIXERX_VENDORED ON)
 
 # install SDLMixerX
 include(cmake/library_FreeImage.cmake)
@@ -421,13 +433,13 @@ if(ANDROID)
 
 
 elseif(NINTENDO_WII OR NINTENDO_WIIU OR NINTENDO_3DS OR NINTENDO_DS)
-    add_executable(thextech_e ${THEXTECH_SRC} ${LIB_SRC})
-    add_library(thextech ${THEXTECH_SRC} ${LIB_SRC})
+#    add_executable(thextech_e ${THEXTECH_SRC} ${LIB_SRC})
+    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
     set_target_properties(thextech PROPERTIES SUFFIX ".elf")
 
 else()
-    add_executable(thextech_e ${THEXTECH_SRC} ${LIB_SRC})
-    add_library(thextech ${THEXTECH_SRC} ${LIB_SRC})
+#    add_executable(thextech_e ${THEXTECH_SRC} ${LIB_SRC})
+    add_executable(thextech ${THEXTECH_SRC} ${LIB_SRC})
     pge_set_nopie(thextech)
 endif()
 
@@ -497,7 +509,7 @@ endif()
 target_include_directories(thextech PRIVATE ${A2XT_INCS})
 target_link_libraries(thextech PRIVATE A2XT_Int)
 
-set(DEPENDENCY_INCLUDE_DIRS ${A2XT_INCS})
+set(DEPENDENCY_INCLUDE_DIRS A2XT_INCS)
 set(DEPENDENCY_INCLUDE_DIRS ${DEPENDENCY_INCLUDE_DIRS} PARENT_SCOPE)
 
 set(DEPENDENCY_LINK_LIBRARIES A2XT_Int)
